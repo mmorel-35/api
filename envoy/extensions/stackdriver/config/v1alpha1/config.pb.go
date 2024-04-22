@@ -28,10 +28,10 @@
 package v1alpha1
 
 import (
-	duration "github.com/golang/protobuf/ptypes/duration"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -180,7 +180,7 @@ type PluginConfig struct {
 	// stackdriver logging service to report buffered LogWrite request.
 	// Customers can choose to report more aggressively by keeping shorter report
 	// interval if needed. Default is 10s.
-	LogReportDuration *duration.Duration `protobuf:"bytes,13,opt,name=log_report_duration,json=logReportDuration,proto3" json:"log_report_duration,omitempty"`
+	LogReportDuration *durationpb.Duration `protobuf:"bytes,13,opt,name=log_report_duration,json=logReportDuration,proto3" json:"log_report_duration,omitempty"`
 	// Optional. Controls whether to export audit log.
 	EnableAuditLog bool `protobuf:"varint,11,opt,name=enable_audit_log,json=enableAuditLog,proto3" json:"enable_audit_log,omitempty"`
 	// Optional. FQDN of destination service that the request routed to, e.g.
@@ -205,7 +205,7 @@ type PluginConfig struct {
 	// is no-op.
 	//
 	// Deprecated: Marked as deprecated in envoy/extensions/stackdriver/config/v1alpha1/config.proto.
-	MeshEdgesReportingDuration *duration.Duration `protobuf:"bytes,4,opt,name=mesh_edges_reporting_duration,json=meshEdgesReportingDuration,proto3" json:"mesh_edges_reporting_duration,omitempty"`
+	MeshEdgesReportingDuration *durationpb.Duration `protobuf:"bytes,4,opt,name=mesh_edges_reporting_duration,json=meshEdgesReportingDuration,proto3" json:"mesh_edges_reporting_duration,omitempty"`
 	// maximum size of the peer metadata cache.
 	// A long lived proxy that connects with many transient peers can build up a
 	// large cache. To turn off the cache, set this field to a negative value.
@@ -226,7 +226,7 @@ type PluginConfig struct {
 	// Deprecated: Marked as deprecated in envoy/extensions/stackdriver/config/v1alpha1/config.proto.
 	DisableHttpSizeMetrics bool `protobuf:"varint,8,opt,name=disable_http_size_metrics,json=disableHttpSizeMetrics,proto3" json:"disable_http_size_metrics,omitempty"`
 	// Optional. Allows enabling log compression for stackdriver access logs.
-	EnableLogCompression *wrappers.BoolValue `protobuf:"bytes,9,opt,name=enable_log_compression,json=enableLogCompression,proto3" json:"enable_log_compression,omitempty"`
+	EnableLogCompression *wrapperspb.BoolValue `protobuf:"bytes,9,opt,name=enable_log_compression,json=enableLogCompression,proto3" json:"enable_log_compression,omitempty"`
 	// Optional. Controls what type of logs to export..
 	AccessLogging PluginConfig_AccessLogging `protobuf:"varint,10,opt,name=access_logging,json=accessLogging,proto3,enum=stackdriver.config.v1alpha1.PluginConfig_AccessLogging" json:"access_logging,omitempty"`
 	// CEL expression for filtering access logging. If the expression evaluates
@@ -259,7 +259,7 @@ type PluginConfig struct {
 	// cache as well as metric reporting. If this is not set or set to 0, time
 	// series will never be expired. This option is useful to avoid unbounded
 	// metric label explodes proxy memory.
-	MetricExpiryDuration *duration.Duration `protobuf:"bytes,15,opt,name=metric_expiry_duration,json=metricExpiryDuration,proto3" json:"metric_expiry_duration,omitempty"`
+	MetricExpiryDuration *durationpb.Duration `protobuf:"bytes,15,opt,name=metric_expiry_duration,json=metricExpiryDuration,proto3" json:"metric_expiry_duration,omitempty"`
 	// Optional. Allows altering metrics behavior.
 	// Metric names for specifying overloads drop the `istio.io/service` prefix.
 	// Examples: `server/request_count`, `client/roundtrip_latencies`
@@ -313,7 +313,7 @@ func (x *PluginConfig) GetMaxLogBatchSizeInBytes() int32 {
 	return 0
 }
 
-func (x *PluginConfig) GetLogReportDuration() *duration.Duration {
+func (x *PluginConfig) GetLogReportDuration() *durationpb.Duration {
 	if x != nil {
 		return x.LogReportDuration
 	}
@@ -343,7 +343,7 @@ func (x *PluginConfig) GetEnableMeshEdgesReporting() bool {
 }
 
 // Deprecated: Marked as deprecated in envoy/extensions/stackdriver/config/v1alpha1/config.proto.
-func (x *PluginConfig) GetMeshEdgesReportingDuration() *duration.Duration {
+func (x *PluginConfig) GetMeshEdgesReportingDuration() *durationpb.Duration {
 	if x != nil {
 		return x.MeshEdgesReportingDuration
 	}
@@ -379,7 +379,7 @@ func (x *PluginConfig) GetDisableHttpSizeMetrics() bool {
 	return false
 }
 
-func (x *PluginConfig) GetEnableLogCompression() *wrappers.BoolValue {
+func (x *PluginConfig) GetEnableLogCompression() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.EnableLogCompression
 	}
@@ -407,7 +407,7 @@ func (x *PluginConfig) GetCustomLogConfig() *CustomConfig {
 	return nil
 }
 
-func (x *PluginConfig) GetMetricExpiryDuration() *duration.Duration {
+func (x *PluginConfig) GetMetricExpiryDuration() *durationpb.Duration {
 	if x != nil {
 		return x.MetricExpiryDuration
 	}
@@ -637,8 +637,8 @@ var file_envoy_extensions_stackdriver_config_v1alpha1_config_proto_goTypes = []i
 	nil,                             // 4: stackdriver.config.v1alpha1.CustomConfig.DimensionsEntry
 	nil,                             // 5: stackdriver.config.v1alpha1.PluginConfig.MetricsOverridesEntry
 	nil,                             // 6: stackdriver.config.v1alpha1.MetricsOverride.TagOverridesEntry
-	(*duration.Duration)(nil),       // 7: google.protobuf.Duration
-	(*wrappers.BoolValue)(nil),      // 8: google.protobuf.BoolValue
+	(*durationpb.Duration)(nil),     // 7: google.protobuf.Duration
+	(*wrapperspb.BoolValue)(nil),    // 8: google.protobuf.BoolValue
 }
 var file_envoy_extensions_stackdriver_config_v1alpha1_config_proto_depIdxs = []int32{
 	4,  // 0: stackdriver.config.v1alpha1.CustomConfig.dimensions:type_name -> stackdriver.config.v1alpha1.CustomConfig.DimensionsEntry

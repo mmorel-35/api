@@ -21,10 +21,10 @@
 package v1alpha1
 
 import (
-	duration "github.com/golang/protobuf/ptypes/duration"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	v1alpha3 "istio.io/api/networking/v1alpha3"
 	v1beta1 "istio.io/api/networking/v1beta1"
 	reflect "reflect"
@@ -868,14 +868,14 @@ type ProxyConfig struct {
 	// The time in seconds that Envoy will drain connections during a hot
 	// restart. MUST be >=1s (e.g., _1s/1m/1h_)
 	// Default drain duration is `45s`.
-	DrainDuration *duration.Duration `protobuf:"bytes,4,opt,name=drain_duration,json=drainDuration,proto3" json:"drain_duration,omitempty"`
+	DrainDuration *durationpb.Duration `protobuf:"bytes,4,opt,name=drain_duration,json=drainDuration,proto3" json:"drain_duration,omitempty"`
 	// Address of the discovery service exposing xDS with mTLS connection.
 	// The inject configuration may override this value.
 	DiscoveryAddress string `protobuf:"bytes,6,opt,name=discovery_address,json=discoveryAddress,proto3" json:"discovery_address,omitempty"`
 	// $hide_from_docs
 	//
 	// Deprecated: Marked as deprecated in mesh/v1alpha1/proxy.proto.
-	DiscoveryRefreshDelay *duration.Duration `protobuf:"bytes,7,opt,name=discovery_refresh_delay,json=discoveryRefreshDelay,proto3" json:"discovery_refresh_delay,omitempty"`
+	DiscoveryRefreshDelay *durationpb.Duration `protobuf:"bytes,7,opt,name=discovery_refresh_delay,json=discoveryRefreshDelay,proto3" json:"discovery_refresh_delay,omitempty"`
 	// Address of the Zipkin service (e.g. _zipkin:9411_).
 	// DEPRECATED: Use [tracing][istio.mesh.v1alpha1.ProxyConfig.tracing] instead.
 	//
@@ -910,7 +910,7 @@ type ProxyConfig struct {
 	// If unset, this will be automatically determined based on CPU requests/limits.
 	// If set to 0, all cores on the machine will be used.
 	// Default is 2 worker threads.
-	Concurrency *wrappers.Int32Value `protobuf:"bytes,16,opt,name=concurrency,proto3" json:"concurrency,omitempty"`
+	Concurrency *wrapperspb.Int32Value `protobuf:"bytes,16,opt,name=concurrency,proto3" json:"concurrency,omitempty"`
 	// Path to the proxy bootstrap template file
 	ProxyBootstrapTemplatePath string `protobuf:"bytes,17,opt,name=proxy_bootstrap_template_path,json=proxyBootstrapTemplatePath,proto3" json:"proxy_bootstrap_template_path,omitempty"`
 	// The mode used to redirect inbound traffic to Envoy.
@@ -957,7 +957,7 @@ type ProxyConfig struct {
 	// preventing any new connections and allowing existing connections to complete. It then
 	// sleeps for the `termination_drain_duration` and then kills any remaining active Envoy processes.
 	// If not set, a default of `5s` will be applied.
-	TerminationDrainDuration *duration.Duration `protobuf:"bytes,29,opt,name=termination_drain_duration,json=terminationDrainDuration,proto3" json:"termination_drain_duration,omitempty"`
+	TerminationDrainDuration *durationpb.Duration `protobuf:"bytes,29,opt,name=termination_drain_duration,json=terminationDrainDuration,proto3" json:"termination_drain_duration,omitempty"`
 	// The unique identifier for the [service mesh](https://istio.io/docs/reference/glossary/#service-mesh)
 	// All control planes running in the same service mesh should specify the same mesh ID.
 	// Mesh ID is used to label telemetry reports for cases where telemetry from multiple meshes is mixed together.
@@ -996,7 +996,7 @@ type ProxyConfig struct {
 	// This feature adds hooks to delay application startup until the pod proxy
 	// is ready to accept traffic, mitigating some startup race conditions.
 	// Default value is 'false'.
-	HoldApplicationUntilProxyStarts *wrappers.BoolValue `protobuf:"bytes,33,opt,name=hold_application_until_proxy_starts,json=holdApplicationUntilProxyStarts,proto3" json:"hold_application_until_proxy_starts,omitempty"`
+	HoldApplicationUntilProxyStarts *wrapperspb.BoolValue `protobuf:"bytes,33,opt,name=hold_application_until_proxy_starts,json=holdApplicationUntilProxyStarts,proto3" json:"hold_application_until_proxy_starts,omitempty"`
 	// The PEM data of the extra root certificates for workload-to-workload communication.
 	// This includes the certificates defined in MeshConfig and any other certificates that Istiod uses as CA.
 	// The plugin certificates (the 'cacerts' secret), self-signed certificates (the 'istio-ca-secret' secret)
@@ -1112,7 +1112,7 @@ func (x *ProxyConfig) GetTracingServiceName() ProxyConfig_TracingServiceName {
 	return ProxyConfig_APP_LABEL_AND_NAMESPACE
 }
 
-func (x *ProxyConfig) GetDrainDuration() *duration.Duration {
+func (x *ProxyConfig) GetDrainDuration() *durationpb.Duration {
 	if x != nil {
 		return x.DrainDuration
 	}
@@ -1127,7 +1127,7 @@ func (x *ProxyConfig) GetDiscoveryAddress() string {
 }
 
 // Deprecated: Marked as deprecated in mesh/v1alpha1/proxy.proto.
-func (x *ProxyConfig) GetDiscoveryRefreshDelay() *duration.Duration {
+func (x *ProxyConfig) GetDiscoveryRefreshDelay() *durationpb.Duration {
 	if x != nil {
 		return x.DiscoveryRefreshDelay
 	}
@@ -1193,7 +1193,7 @@ func (x *ProxyConfig) GetStatNameLength() int32 {
 	return 0
 }
 
-func (x *ProxyConfig) GetConcurrency() *wrappers.Int32Value {
+func (x *ProxyConfig) GetConcurrency() *wrapperspb.Int32Value {
 	if x != nil {
 		return x.Concurrency
 	}
@@ -1278,7 +1278,7 @@ func (x *ProxyConfig) GetGatewayTopology() *Topology {
 	return nil
 }
 
-func (x *ProxyConfig) GetTerminationDrainDuration() *duration.Duration {
+func (x *ProxyConfig) GetTerminationDrainDuration() *durationpb.Duration {
 	if x != nil {
 		return x.TerminationDrainDuration
 	}
@@ -1306,7 +1306,7 @@ func (x *ProxyConfig) GetProxyStatsMatcher() *ProxyConfig_ProxyStatsMatcher {
 	return nil
 }
 
-func (x *ProxyConfig) GetHoldApplicationUntilProxyStarts() *wrappers.BoolValue {
+func (x *ProxyConfig) GetHoldApplicationUntilProxyStarts() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.HoldApplicationUntilProxyStarts
 	}
@@ -1614,15 +1614,15 @@ type Tracing_Stackdriver struct {
 	// The global default max number of attributes per span.
 	// default is 200.
 	// $hide_from_docs
-	MaxNumberOfAttributes *wrappers.Int64Value `protobuf:"bytes,2,opt,name=max_number_of_attributes,json=maxNumberOfAttributes,proto3" json:"max_number_of_attributes,omitempty"`
+	MaxNumberOfAttributes *wrapperspb.Int64Value `protobuf:"bytes,2,opt,name=max_number_of_attributes,json=maxNumberOfAttributes,proto3" json:"max_number_of_attributes,omitempty"`
 	// The global default max number of annotation events per span.
 	// default is 200.
 	// $hide_from_docs
-	MaxNumberOfAnnotations *wrappers.Int64Value `protobuf:"bytes,3,opt,name=max_number_of_annotations,json=maxNumberOfAnnotations,proto3" json:"max_number_of_annotations,omitempty"`
+	MaxNumberOfAnnotations *wrapperspb.Int64Value `protobuf:"bytes,3,opt,name=max_number_of_annotations,json=maxNumberOfAnnotations,proto3" json:"max_number_of_annotations,omitempty"`
 	// The global default max number of message events per span.
 	// default is 200.
 	// $hide_from_docs
-	MaxNumberOfMessageEvents *wrappers.Int64Value `protobuf:"bytes,4,opt,name=max_number_of_message_events,json=maxNumberOfMessageEvents,proto3" json:"max_number_of_message_events,omitempty"`
+	MaxNumberOfMessageEvents *wrapperspb.Int64Value `protobuf:"bytes,4,opt,name=max_number_of_message_events,json=maxNumberOfMessageEvents,proto3" json:"max_number_of_message_events,omitempty"`
 }
 
 func (x *Tracing_Stackdriver) Reset() {
@@ -1664,21 +1664,21 @@ func (x *Tracing_Stackdriver) GetDebug() bool {
 	return false
 }
 
-func (x *Tracing_Stackdriver) GetMaxNumberOfAttributes() *wrappers.Int64Value {
+func (x *Tracing_Stackdriver) GetMaxNumberOfAttributes() *wrapperspb.Int64Value {
 	if x != nil {
 		return x.MaxNumberOfAttributes
 	}
 	return nil
 }
 
-func (x *Tracing_Stackdriver) GetMaxNumberOfAnnotations() *wrappers.Int64Value {
+func (x *Tracing_Stackdriver) GetMaxNumberOfAnnotations() *wrapperspb.Int64Value {
 	if x != nil {
 		return x.MaxNumberOfAnnotations
 	}
 	return nil
 }
 
-func (x *Tracing_Stackdriver) GetMaxNumberOfMessageEvents() *wrappers.Int64Value {
+func (x *Tracing_Stackdriver) GetMaxNumberOfMessageEvents() *wrapperspb.Int64Value {
 	if x != nil {
 		return x.MaxNumberOfMessageEvents
 	}
@@ -2082,11 +2082,11 @@ type PrivateKeyProvider_CryptoMb struct {
 	// are processed, even if the queue is not full.
 	// In effect, this value controls the balance between latency and throughput.
 	// The duration needs to be set to a value greater than or equal to 1 millisecond.
-	PollDelay *duration.Duration `protobuf:"bytes,1,opt,name=poll_delay,json=pollDelay,proto3" json:"poll_delay,omitempty"`
+	PollDelay *durationpb.Duration `protobuf:"bytes,1,opt,name=poll_delay,json=pollDelay,proto3" json:"poll_delay,omitempty"`
 	// If the private key provider isn’t available (eg. the required hardware capability doesn’t existed)
 	// Envoy will fallback to the BoringSSL default implementation when the fallback is true.
 	// The default value is false.
-	Fallback *wrappers.BoolValue `protobuf:"bytes,2,opt,name=fallback,proto3" json:"fallback,omitempty"`
+	Fallback *wrapperspb.BoolValue `protobuf:"bytes,2,opt,name=fallback,proto3" json:"fallback,omitempty"`
 }
 
 func (x *PrivateKeyProvider_CryptoMb) Reset() {
@@ -2121,14 +2121,14 @@ func (*PrivateKeyProvider_CryptoMb) Descriptor() ([]byte, []int) {
 	return file_mesh_v1alpha1_proxy_proto_rawDescGZIP(), []int{3, 0}
 }
 
-func (x *PrivateKeyProvider_CryptoMb) GetPollDelay() *duration.Duration {
+func (x *PrivateKeyProvider_CryptoMb) GetPollDelay() *durationpb.Duration {
 	if x != nil {
 		return x.PollDelay
 	}
 	return nil
 }
 
-func (x *PrivateKeyProvider_CryptoMb) GetFallback() *wrappers.BoolValue {
+func (x *PrivateKeyProvider_CryptoMb) GetFallback() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Fallback
 	}
@@ -2145,11 +2145,11 @@ type PrivateKeyProvider_QAT struct {
 	// Having a small value leads to quicker answers from the hardware but causes more polling loop spins,
 	// leading to potentially larger CPU usage.
 	// The duration needs to be set to a value greater than or equal to 1 millisecond.
-	PollDelay *duration.Duration `protobuf:"bytes,1,opt,name=poll_delay,json=pollDelay,proto3" json:"poll_delay,omitempty"`
+	PollDelay *durationpb.Duration `protobuf:"bytes,1,opt,name=poll_delay,json=pollDelay,proto3" json:"poll_delay,omitempty"`
 	// If the private key provider isn’t available (eg. the required hardware capability doesn’t existed)
 	// Envoy will fallback to the BoringSSL default implementation when the fallback is true.
 	// The default value is false.
-	Fallback *wrappers.BoolValue `protobuf:"bytes,2,opt,name=fallback,proto3" json:"fallback,omitempty"`
+	Fallback *wrapperspb.BoolValue `protobuf:"bytes,2,opt,name=fallback,proto3" json:"fallback,omitempty"`
 }
 
 func (x *PrivateKeyProvider_QAT) Reset() {
@@ -2184,14 +2184,14 @@ func (*PrivateKeyProvider_QAT) Descriptor() ([]byte, []int) {
 	return file_mesh_v1alpha1_proxy_proto_rawDescGZIP(), []int{3, 1}
 }
 
-func (x *PrivateKeyProvider_QAT) GetPollDelay() *duration.Duration {
+func (x *PrivateKeyProvider_QAT) GetPollDelay() *durationpb.Duration {
 	if x != nil {
 		return x.PollDelay
 	}
 	return nil
 }
 
-func (x *PrivateKeyProvider_QAT) GetFallback() *wrappers.BoolValue {
+func (x *PrivateKeyProvider_QAT) GetFallback() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Fallback
 	}
@@ -2380,7 +2380,7 @@ type ProxyConfig_ProxyHeaders_Server struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Disabled *wrappers.BoolValue `protobuf:"bytes,1,opt,name=disabled,proto3" json:"disabled,omitempty"`
+	Disabled *wrapperspb.BoolValue `protobuf:"bytes,1,opt,name=disabled,proto3" json:"disabled,omitempty"`
 	// If set, and the server header is enabled, this value will be set as the server header. By default, `istio-envoy` will be used.
 	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 }
@@ -2417,7 +2417,7 @@ func (*ProxyConfig_ProxyHeaders_Server) Descriptor() ([]byte, []int) {
 	return file_mesh_v1alpha1_proxy_proto_rawDescGZIP(), []int{4, 3, 0}
 }
 
-func (x *ProxyConfig_ProxyHeaders_Server) GetDisabled() *wrappers.BoolValue {
+func (x *ProxyConfig_ProxyHeaders_Server) GetDisabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Disabled
 	}
@@ -2436,7 +2436,7 @@ type ProxyConfig_ProxyHeaders_RequestId struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Disabled *wrappers.BoolValue `protobuf:"bytes,1,opt,name=disabled,proto3" json:"disabled,omitempty"`
+	Disabled *wrapperspb.BoolValue `protobuf:"bytes,1,opt,name=disabled,proto3" json:"disabled,omitempty"`
 }
 
 func (x *ProxyConfig_ProxyHeaders_RequestId) Reset() {
@@ -2471,7 +2471,7 @@ func (*ProxyConfig_ProxyHeaders_RequestId) Descriptor() ([]byte, []int) {
 	return file_mesh_v1alpha1_proxy_proto_rawDescGZIP(), []int{4, 3, 1}
 }
 
-func (x *ProxyConfig_ProxyHeaders_RequestId) GetDisabled() *wrappers.BoolValue {
+func (x *ProxyConfig_ProxyHeaders_RequestId) GetDisabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Disabled
 	}
@@ -2483,7 +2483,7 @@ type ProxyConfig_ProxyHeaders_AttemptCount struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Disabled *wrappers.BoolValue `protobuf:"bytes,1,opt,name=disabled,proto3" json:"disabled,omitempty"`
+	Disabled *wrapperspb.BoolValue `protobuf:"bytes,1,opt,name=disabled,proto3" json:"disabled,omitempty"`
 }
 
 func (x *ProxyConfig_ProxyHeaders_AttemptCount) Reset() {
@@ -2518,7 +2518,7 @@ func (*ProxyConfig_ProxyHeaders_AttemptCount) Descriptor() ([]byte, []int) {
 	return file_mesh_v1alpha1_proxy_proto_rawDescGZIP(), []int{4, 3, 2}
 }
 
-func (x *ProxyConfig_ProxyHeaders_AttemptCount) GetDisabled() *wrappers.BoolValue {
+func (x *ProxyConfig_ProxyHeaders_AttemptCount) GetDisabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Disabled
 	}
@@ -2530,7 +2530,7 @@ type ProxyConfig_ProxyHeaders_EnvoyDebugHeaders struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Disabled *wrappers.BoolValue `protobuf:"bytes,1,opt,name=disabled,proto3" json:"disabled,omitempty"`
+	Disabled *wrapperspb.BoolValue `protobuf:"bytes,1,opt,name=disabled,proto3" json:"disabled,omitempty"`
 }
 
 func (x *ProxyConfig_ProxyHeaders_EnvoyDebugHeaders) Reset() {
@@ -2565,7 +2565,7 @@ func (*ProxyConfig_ProxyHeaders_EnvoyDebugHeaders) Descriptor() ([]byte, []int) 
 	return file_mesh_v1alpha1_proxy_proto_rawDescGZIP(), []int{4, 3, 3}
 }
 
-func (x *ProxyConfig_ProxyHeaders_EnvoyDebugHeaders) GetDisabled() *wrappers.BoolValue {
+func (x *ProxyConfig_ProxyHeaders_EnvoyDebugHeaders) GetDisabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Disabled
 	}
@@ -3136,13 +3136,13 @@ var file_mesh_v1alpha1_proxy_proto_goTypes = []interface{}{
 	(*ProxyConfig_ProxyHeaders_EnvoyDebugHeaders)(nil),       // 32: istio.mesh.v1alpha1.ProxyConfig.ProxyHeaders.EnvoyDebugHeaders
 	(*ProxyConfig_ProxyHeaders_MetadataExchangeHeaders)(nil), // 33: istio.mesh.v1alpha1.ProxyConfig.ProxyHeaders.MetadataExchangeHeaders
 	(*v1alpha3.ClientTLSSettings)(nil),                       // 34: istio.networking.v1alpha3.ClientTLSSettings
-	(*duration.Duration)(nil),                                // 35: google.protobuf.Duration
-	(*wrappers.Int32Value)(nil),                              // 36: google.protobuf.Int32Value
+	(*durationpb.Duration)(nil),                              // 35: google.protobuf.Duration
+	(*wrapperspb.Int32Value)(nil),                            // 36: google.protobuf.Int32Value
 	(*v1alpha3.ReadinessProbe)(nil),                          // 37: istio.networking.v1alpha3.ReadinessProbe
-	(*wrappers.BoolValue)(nil),                               // 38: google.protobuf.BoolValue
+	(*wrapperspb.BoolValue)(nil),                             // 38: google.protobuf.BoolValue
 	(*v1beta1.ProxyImage)(nil),                               // 39: istio.networking.v1beta1.ProxyImage
 	(*v1alpha3.ConnectionPoolSettings_TCPSettings_TcpKeepalive)(nil), // 40: istio.networking.v1alpha3.ConnectionPoolSettings.TCPSettings.TcpKeepalive
-	(*wrappers.Int64Value)(nil),                                      // 41: google.protobuf.Int64Value
+	(*wrapperspb.Int64Value)(nil),                                    // 41: google.protobuf.Int64Value
 }
 var file_mesh_v1alpha1_proxy_proto_depIdxs = []int32{
 	12, // 0: istio.mesh.v1alpha1.Tracing.zipkin:type_name -> istio.mesh.v1alpha1.Tracing.Zipkin

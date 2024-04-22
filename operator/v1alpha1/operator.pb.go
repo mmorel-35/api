@@ -33,11 +33,11 @@
 package v1alpha1
 
 import (
-	any1 "github.com/golang/protobuf/ptypes/any"
-	_struct "github.com/golang/protobuf/ptypes/struct"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	anypb "google.golang.org/protobuf/types/known/anypb"
+	structpb "google.golang.org/protobuf/types/known/structpb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	v1 "k8s.io/api/core/v1"
 	v11 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	reflect "reflect"
@@ -166,7 +166,7 @@ type IstioOperatorSpec struct {
 	// Root for docker image paths e.g. `docker.io/istio`
 	Hub string `protobuf:"bytes,12,opt,name=hub,proto3" json:"hub,omitempty"`
 	// Version tag for docker images e.g. `1.7.2`
-	Tag *_struct.Value `protobuf:"bytes,13,opt,name=tag,proto3" json:"tag,omitempty"`
+	Tag *structpb.Value `protobuf:"bytes,13,opt,name=tag,proto3" json:"tag,omitempty"`
 	// $hide_from_docs
 	// Resource suffix is appended to all resources installed by each component.
 	// Never implemented; replaced by revision.
@@ -186,7 +186,7 @@ type IstioOperatorSpec struct {
 	// This option is currently experimental.
 	CompatibilityVersion string `protobuf:"bytes,18,opt,name=compatibilityVersion,proto3" json:"compatibilityVersion,omitempty"`
 	// Config used by control plane components internally.
-	MeshConfig *_struct.Struct `protobuf:"bytes,40,opt,name=meshConfig,proto3" json:"meshConfig,omitempty"`
+	MeshConfig *structpb.Struct `protobuf:"bytes,40,opt,name=meshConfig,proto3" json:"meshConfig,omitempty"`
 	// Kubernetes resource settings, enablement and component-specific settings that are not internal to the
 	// component.
 	Components *IstioComponentSetSpec `protobuf:"bytes,50,opt,name=components,proto3" json:"components,omitempty"`
@@ -200,9 +200,9 @@ type IstioOperatorSpec struct {
 	// See the [Helm installation options](https://istio.io/v1.5/docs/reference/config/installation-options/) for schema details.
 	// Anything that is available in `IstioOperatorSpec` should be set above rather than using the passthrough. This
 	// includes Kubernetes resource settings for components in `KubernetesResourcesSpec`.
-	Values *_struct.Struct `protobuf:"bytes,100,opt,name=values,proto3" json:"values,omitempty"`
+	Values *structpb.Struct `protobuf:"bytes,100,opt,name=values,proto3" json:"values,omitempty"`
 	// Unvalidated overrides for default `values.yaml`. Used for custom templates where new parameters are added.
-	UnvalidatedValues *_struct.Struct `protobuf:"bytes,101,opt,name=unvalidatedValues,proto3" json:"unvalidatedValues,omitempty"`
+	UnvalidatedValues *structpb.Struct `protobuf:"bytes,101,opt,name=unvalidatedValues,proto3" json:"unvalidatedValues,omitempty"`
 }
 
 func (x *IstioOperatorSpec) Reset() {
@@ -258,7 +258,7 @@ func (x *IstioOperatorSpec) GetHub() string {
 	return ""
 }
 
-func (x *IstioOperatorSpec) GetTag() *_struct.Value {
+func (x *IstioOperatorSpec) GetTag() *structpb.Value {
 	if x != nil {
 		return x.Tag
 	}
@@ -294,7 +294,7 @@ func (x *IstioOperatorSpec) GetCompatibilityVersion() string {
 	return ""
 }
 
-func (x *IstioOperatorSpec) GetMeshConfig() *_struct.Struct {
+func (x *IstioOperatorSpec) GetMeshConfig() *structpb.Struct {
 	if x != nil {
 		return x.MeshConfig
 	}
@@ -316,14 +316,14 @@ func (x *IstioOperatorSpec) GetAddonComponents() map[string]*ExternalComponentSp
 	return nil
 }
 
-func (x *IstioOperatorSpec) GetValues() *_struct.Struct {
+func (x *IstioOperatorSpec) GetValues() *structpb.Struct {
 	if x != nil {
 		return x.Values
 	}
 	return nil
 }
 
-func (x *IstioOperatorSpec) GetUnvalidatedValues() *_struct.Struct {
+func (x *IstioOperatorSpec) GetUnvalidatedValues() *structpb.Struct {
 	if x != nil {
 		return x.UnvalidatedValues
 	}
@@ -509,7 +509,7 @@ type BaseComponentSpec struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Selects whether this component is installed.
-	Enabled *wrappers.BoolValue `protobuf:"bytes,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Enabled *wrapperspb.BoolValue `protobuf:"bytes,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	// Kubernetes resource spec.
 	K8S *KubernetesResourcesSpec `protobuf:"bytes,50,opt,name=k8s,proto3" json:"k8s,omitempty"`
 }
@@ -546,7 +546,7 @@ func (*BaseComponentSpec) Descriptor() ([]byte, []int) {
 	return file_operator_v1alpha1_operator_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *BaseComponentSpec) GetEnabled() *wrappers.BoolValue {
+func (x *BaseComponentSpec) GetEnabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Enabled
 	}
@@ -567,15 +567,15 @@ type ComponentSpec struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Selects whether this component is installed.
-	Enabled *wrappers.BoolValue `protobuf:"bytes,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Enabled *wrapperspb.BoolValue `protobuf:"bytes,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	// Namespace for the component.
 	Namespace string `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	// Hub for the component (overrides top level hub setting).
 	Hub string `protobuf:"bytes,10,opt,name=hub,proto3" json:"hub,omitempty"`
 	// Tag for the component (overrides top level tag setting).
-	Tag *_struct.Value `protobuf:"bytes,11,opt,name=tag,proto3" json:"tag,omitempty"`
+	Tag *structpb.Value `protobuf:"bytes,11,opt,name=tag,proto3" json:"tag,omitempty"`
 	// Arbitrary install time configuration for the component.
-	Spec *_struct.Struct `protobuf:"bytes,30,opt,name=spec,proto3" json:"spec,omitempty"`
+	Spec *structpb.Struct `protobuf:"bytes,30,opt,name=spec,proto3" json:"spec,omitempty"`
 	// Kubernetes resource spec.
 	K8S *KubernetesResourcesSpec `protobuf:"bytes,50,opt,name=k8s,proto3" json:"k8s,omitempty"`
 }
@@ -612,7 +612,7 @@ func (*ComponentSpec) Descriptor() ([]byte, []int) {
 	return file_operator_v1alpha1_operator_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ComponentSpec) GetEnabled() *wrappers.BoolValue {
+func (x *ComponentSpec) GetEnabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Enabled
 	}
@@ -633,14 +633,14 @@ func (x *ComponentSpec) GetHub() string {
 	return ""
 }
 
-func (x *ComponentSpec) GetTag() *_struct.Value {
+func (x *ComponentSpec) GetTag() *structpb.Value {
 	if x != nil {
 		return x.Tag
 	}
 	return nil
 }
 
-func (x *ComponentSpec) GetSpec() *_struct.Struct {
+func (x *ComponentSpec) GetSpec() *structpb.Struct {
 	if x != nil {
 		return x.Spec
 	}
@@ -661,15 +661,15 @@ type ExternalComponentSpec struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Selects whether this component is installed.
-	Enabled *wrappers.BoolValue `protobuf:"bytes,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Enabled *wrapperspb.BoolValue `protobuf:"bytes,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	// Namespace for the component.
 	Namespace string `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	// Arbitrary install time configuration for the component.
-	Spec *_struct.Struct `protobuf:"bytes,10,opt,name=spec,proto3" json:"spec,omitempty"`
+	Spec *structpb.Struct `protobuf:"bytes,10,opt,name=spec,proto3" json:"spec,omitempty"`
 	// Chart path for addon components.
 	ChartPath string `protobuf:"bytes,30,opt,name=chartPath,proto3" json:"chartPath,omitempty"`
 	// Optional schema to validate spec against.
-	Schema *any1.Any `protobuf:"bytes,35,opt,name=schema,proto3" json:"schema,omitempty"`
+	Schema *anypb.Any `protobuf:"bytes,35,opt,name=schema,proto3" json:"schema,omitempty"`
 	// Kubernetes resource spec.
 	K8S *KubernetesResourcesSpec `protobuf:"bytes,50,opt,name=k8s,proto3" json:"k8s,omitempty"`
 }
@@ -706,7 +706,7 @@ func (*ExternalComponentSpec) Descriptor() ([]byte, []int) {
 	return file_operator_v1alpha1_operator_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ExternalComponentSpec) GetEnabled() *wrappers.BoolValue {
+func (x *ExternalComponentSpec) GetEnabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Enabled
 	}
@@ -720,7 +720,7 @@ func (x *ExternalComponentSpec) GetNamespace() string {
 	return ""
 }
 
-func (x *ExternalComponentSpec) GetSpec() *_struct.Struct {
+func (x *ExternalComponentSpec) GetSpec() *structpb.Struct {
 	if x != nil {
 		return x.Spec
 	}
@@ -734,7 +734,7 @@ func (x *ExternalComponentSpec) GetChartPath() string {
 	return ""
 }
 
-func (x *ExternalComponentSpec) GetSchema() *any1.Any {
+func (x *ExternalComponentSpec) GetSchema() *anypb.Any {
 	if x != nil {
 		return x.Schema
 	}
@@ -755,7 +755,7 @@ type GatewaySpec struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Selects whether this gateway is installed.
-	Enabled *wrappers.BoolValue `protobuf:"bytes,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Enabled *wrapperspb.BoolValue `protobuf:"bytes,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	// Namespace for the gateway.
 	Namespace string `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	// Name for the gateway.
@@ -765,7 +765,7 @@ type GatewaySpec struct {
 	// Hub for the component (overrides top level hub setting).
 	Hub string `protobuf:"bytes,10,opt,name=hub,proto3" json:"hub,omitempty"`
 	// Tag for the component (overrides top level tag setting).
-	Tag *_struct.Value `protobuf:"bytes,11,opt,name=tag,proto3" json:"tag,omitempty"`
+	Tag *structpb.Value `protobuf:"bytes,11,opt,name=tag,proto3" json:"tag,omitempty"`
 	// Kubernetes resource spec.
 	K8S *KubernetesResourcesSpec `protobuf:"bytes,50,opt,name=k8s,proto3" json:"k8s,omitempty"`
 }
@@ -802,7 +802,7 @@ func (*GatewaySpec) Descriptor() ([]byte, []int) {
 	return file_operator_v1alpha1_operator_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *GatewaySpec) GetEnabled() *wrappers.BoolValue {
+func (x *GatewaySpec) GetEnabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Enabled
 	}
@@ -837,7 +837,7 @@ func (x *GatewaySpec) GetHub() string {
 	return ""
 }
 
-func (x *GatewaySpec) GetTag() *_struct.Value {
+func (x *GatewaySpec) GetTag() *structpb.Value {
 	if x != nil {
 		return x.Tag
 	}
@@ -3087,7 +3087,7 @@ type ObjectMetricSource struct {
 	AverageValue *IntOrString `protobuf:"bytes,5,opt,name=averageValue,proto3" json:"averageValue,omitempty"`
 	// Type changes from CrossVersionObjectReference to ResourceMetricTarget in autoscaling v2beta2/v2 compared with v2beta1
 	// Change it to dynamic type to keep backward compatible
-	Target          *_struct.Value               `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
+	Target          *structpb.Value              `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
 	DescribedObject *CrossVersionObjectReference `protobuf:"bytes,6,opt,name=describedObject,proto3" json:"describedObject,omitempty"`
 	Metric          *MetricIdentifier            `protobuf:"bytes,8,opt,name=metric,proto3" json:"metric,omitempty"`
 }
@@ -3156,7 +3156,7 @@ func (x *ObjectMetricSource) GetAverageValue() *IntOrString {
 	return nil
 }
 
-func (x *ObjectMetricSource) GetTarget() *_struct.Value {
+func (x *ObjectMetricSource) GetTarget() *structpb.Value {
 	if x != nil {
 		return x.Target
 	}
@@ -5013,9 +5013,9 @@ type IntOrString struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Type   int64                 `protobuf:"varint,1,opt,name=type,proto3" json:"type,omitempty"`
-	IntVal *wrappers.Int32Value  `protobuf:"bytes,2,opt,name=intVal,proto3" json:"intVal,omitempty"`
-	StrVal *wrappers.StringValue `protobuf:"bytes,3,opt,name=strVal,proto3" json:"strVal,omitempty"`
+	Type   int64                   `protobuf:"varint,1,opt,name=type,proto3" json:"type,omitempty"`
+	IntVal *wrapperspb.Int32Value  `protobuf:"bytes,2,opt,name=intVal,proto3" json:"intVal,omitempty"`
+	StrVal *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=strVal,proto3" json:"strVal,omitempty"`
 }
 
 func (x *IntOrString) Reset() {
@@ -5057,14 +5057,14 @@ func (x *IntOrString) GetType() int64 {
 	return 0
 }
 
-func (x *IntOrString) GetIntVal() *wrappers.Int32Value {
+func (x *IntOrString) GetIntVal() *wrapperspb.Int32Value {
 	if x != nil {
 		return x.IntVal
 	}
 	return nil
 }
 
-func (x *IntOrString) GetStrVal() *wrappers.StringValue {
+func (x *IntOrString) GetStrVal() *wrapperspb.StringValue {
 	if x != nil {
 		return x.StrVal
 	}
@@ -5150,7 +5150,7 @@ type K8SObjectOverlay_PathValue struct {
 	// For delete, value should be unset.
 	// For replace, path should reference an existing node.
 	// All values are strings but are converted into appropriate type based on schema.
-	Value *_struct.Value `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Value *structpb.Value `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 }
 
 func (x *K8SObjectOverlay_PathValue) Reset() {
@@ -5192,7 +5192,7 @@ func (x *K8SObjectOverlay_PathValue) GetPath() string {
 	return ""
 }
 
-func (x *K8SObjectOverlay_PathValue) GetValue() *_struct.Value {
+func (x *K8SObjectOverlay_PathValue) GetValue() *structpb.Value {
 	if x != nil {
 		return x.Value
 	}
@@ -6390,15 +6390,15 @@ var file_operator_v1alpha1_operator_proto_goTypes = []interface{}{
 	nil,                                     // 76: istio.operator.v1alpha1.Resources.LimitsEntry
 	nil,                                     // 77: istio.operator.v1alpha1.Resources.RequestsEntry
 	nil,                                     // 78: istio.operator.v1alpha1.ServiceSpec.SelectorEntry
-	(*_struct.Value)(nil),                   // 79: google.protobuf.Value
-	(*_struct.Struct)(nil),                  // 80: google.protobuf.Struct
-	(*wrappers.BoolValue)(nil),              // 81: google.protobuf.BoolValue
-	(*any1.Any)(nil),                        // 82: google.protobuf.Any
+	(*structpb.Value)(nil),                  // 79: google.protobuf.Value
+	(*structpb.Struct)(nil),                 // 80: google.protobuf.Struct
+	(*wrapperspb.BoolValue)(nil),            // 81: google.protobuf.BoolValue
+	(*anypb.Any)(nil),                       // 82: google.protobuf.Any
 	(*v1.Volume)(nil),                       // 83: k8s.io.api.core.v1.Volume
 	(*v1.VolumeMount)(nil),                  // 84: k8s.io.api.core.v1.VolumeMount
 	(*v11.LabelSelector)(nil),               // 85: k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector
-	(*wrappers.Int32Value)(nil),             // 86: google.protobuf.Int32Value
-	(*wrappers.StringValue)(nil),            // 87: google.protobuf.StringValue
+	(*wrapperspb.Int32Value)(nil),           // 86: google.protobuf.Int32Value
+	(*wrapperspb.StringValue)(nil),          // 87: google.protobuf.StringValue
 }
 var file_operator_v1alpha1_operator_proto_depIdxs = []int32{
 	79,  // 0: istio.operator.v1alpha1.IstioOperatorSpec.tag:type_name -> google.protobuf.Value

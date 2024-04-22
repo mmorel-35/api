@@ -1,0 +1,14 @@
+# buf.gen-crd.yaml sets up the generation configuration for all of our plugins.
+version: v1
+plugins:
+  - name: golang-deepcopy
+    out: .
+    opt:
+      - paths=source_relative
+  - name: crd
+    out: .
+    strategy: all
+  - name: golang-jsonshim
+    out: .
+    opt:
+      - paths=source_relative

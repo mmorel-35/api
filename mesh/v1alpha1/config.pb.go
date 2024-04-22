@@ -29,11 +29,11 @@
 package v1alpha1
 
 import (
-	duration "github.com/golang/protobuf/ptypes/duration"
-	_struct "github.com/golang/protobuf/ptypes/struct"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
+	structpb "google.golang.org/protobuf/types/known/structpb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	v1alpha3 "istio.io/api/networking/v1alpha3"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	reflect "reflect"
@@ -606,7 +606,7 @@ type MeshConfig struct {
 	ProxyHttpPort int32 `protobuf:"varint,5,opt,name=proxy_http_port,json=proxyHttpPort,proto3" json:"proxy_http_port,omitempty"`
 	// Connection timeout used by Envoy. (MUST BE >=1ms)
 	// Default timeout is 10s.
-	ConnectTimeout *duration.Duration `protobuf:"bytes,6,opt,name=connect_timeout,json=connectTimeout,proto3" json:"connect_timeout,omitempty"`
+	ConnectTimeout *durationpb.Duration `protobuf:"bytes,6,opt,name=connect_timeout,json=connectTimeout,proto3" json:"connect_timeout,omitempty"`
 	// $hide_from_docs
 	// Automatic protocol detection uses a set of heuristics to
 	// determine whether the connection is using TLS or not (on the
@@ -623,7 +623,7 @@ type MeshConfig struct {
 	// occasionally, and when they occur the result is typically broken traffic that may not
 	// recover on its own. Exceptionally high values might solve this, but injecting 60s delays
 	// onto new connections is generally not tenable anyways.
-	ProtocolDetectionTimeout *duration.Duration `protobuf:"bytes,42,opt,name=protocol_detection_timeout,json=protocolDetectionTimeout,proto3" json:"protocol_detection_timeout,omitempty"`
+	ProtocolDetectionTimeout *durationpb.Duration `protobuf:"bytes,42,opt,name=protocol_detection_timeout,json=protocolDetectionTimeout,proto3" json:"protocol_detection_timeout,omitempty"`
 	// If set then set `SO_KEEPALIVE` on the socket to enable TCP Keepalives.
 	TcpKeepalive *v1alpha3.ConnectionPoolSettings_TCPSettings_TcpKeepalive `protobuf:"bytes,28,opt,name=tcp_keepalive,json=tcpKeepalive,proto3" json:"tcp_keepalive,omitempty"`
 	// Class of ingress resources to be processed by Istio ingress
@@ -702,7 +702,7 @@ type MeshConfig struct {
 	// If the upstream authentication policy is in PERMISSIVE mode, Istio configures clients to use
 	// mutual `TLS` when server sides are capable of accepting mutual `TLS` traffic.
 	// If service `DestinationRule` exists and has `ClientTLSSettings` specified, that is always used instead.
-	EnableAutoMtls *wrappers.BoolValue `protobuf:"bytes,43,opt,name=enable_auto_mtls,json=enableAutoMtls,proto3" json:"enable_auto_mtls,omitempty"`
+	EnableAutoMtls *wrapperspb.BoolValue `protobuf:"bytes,43,opt,name=enable_auto_mtls,json=enableAutoMtls,proto3" json:"enable_auto_mtls,omitempty"`
 	// The trust domain corresponds to the trust root of a system.
 	// Refer to [SPIFFE-ID](https://github.com/spiffe/spiffe/blob/master/standards/SPIFFE-ID.md#21-trust-domain)
 	TrustDomain string `protobuf:"bytes,26,opt,name=trust_domain,json=trustDomain,proto3" json:"trust_domain,omitempty"`
@@ -773,7 +773,7 @@ type MeshConfig struct {
 	LocalityLbSetting *v1alpha3.LocalityLoadBalancerSetting `protobuf:"bytes,35,opt,name=locality_lb_setting,json=localityLbSetting,proto3" json:"locality_lb_setting,omitempty"`
 	// Configures DNS refresh rate for Envoy clusters of type `STRICT_DNS`
 	// Default refresh rate is `60s`.
-	DnsRefreshRate *duration.Duration `protobuf:"bytes,36,opt,name=dns_refresh_rate,json=dnsRefreshRate,proto3" json:"dns_refresh_rate,omitempty"`
+	DnsRefreshRate *durationpb.Duration `protobuf:"bytes,36,opt,name=dns_refresh_rate,json=dnsRefreshRate,proto3" json:"dns_refresh_rate,omitempty"`
 	// Specify if http1.1 connections should be upgraded to http2 by default.
 	// if sidecar is installed on all pods in the mesh, then this should be set to `UPGRADE`.
 	// If one or more services or namespaces do not have sidecar(s), then this should be set to `DO_NOT_UPGRADE`.
@@ -834,7 +834,7 @@ type MeshConfig struct {
 	// In this case, it is recommended to disable aggregation on that deployment with the
 	// `prometheus.istio.io/merge-metrics: "false"` annotation.
 	// If not specified, this will be enabled by default.
-	EnablePrometheusMerge *wrappers.BoolValue `protobuf:"bytes,51,opt,name=enable_prometheus_merge,json=enablePrometheusMerge,proto3" json:"enable_prometheus_merge,omitempty"`
+	EnablePrometheusMerge *wrapperspb.BoolValue `protobuf:"bytes,51,opt,name=enable_prometheus_merge,json=enablePrometheusMerge,proto3" json:"enable_prometheus_merge,omitempty"`
 	// $hide_from_docs
 	// `VerifyCertificateAtClient` sets the mesh global default for peer certificate validation
 	// at the client-side proxy when `SIMPLE` TLS or `MUTUAL` TLS (non `ISTIO_MUTUAL`) origination
@@ -858,7 +858,7 @@ type MeshConfig struct {
 	// “.x.y.com` suffix.
 	//
 	// Deprecated: Marked as deprecated in mesh/v1alpha1/config.proto.
-	VerifyCertificateAtClient *wrappers.BoolValue `protobuf:"bytes,54,opt,name=verify_certificate_at_client,json=verifyCertificateAtClient,proto3" json:"verify_certificate_at_client,omitempty"`
+	VerifyCertificateAtClient *wrapperspb.BoolValue `protobuf:"bytes,54,opt,name=verify_certificate_at_client,json=verifyCertificateAtClient,proto3" json:"verify_certificate_at_client,omitempty"`
 	// $hide_from_docs
 	// If specified, Istiod will authorize and forward the CSRs from the workloads to the specified external CA
 	// using the Istio CA gRPC API.
@@ -988,14 +988,14 @@ func (x *MeshConfig) GetProxyHttpPort() int32 {
 	return 0
 }
 
-func (x *MeshConfig) GetConnectTimeout() *duration.Duration {
+func (x *MeshConfig) GetConnectTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.ConnectTimeout
 	}
 	return nil
 }
 
-func (x *MeshConfig) GetProtocolDetectionTimeout() *duration.Duration {
+func (x *MeshConfig) GetProtocolDetectionTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.ProtocolDetectionTimeout
 	}
@@ -1107,7 +1107,7 @@ func (x *MeshConfig) GetConfigSources() []*ConfigSource {
 	return nil
 }
 
-func (x *MeshConfig) GetEnableAutoMtls() *wrappers.BoolValue {
+func (x *MeshConfig) GetEnableAutoMtls() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.EnableAutoMtls
 	}
@@ -1170,7 +1170,7 @@ func (x *MeshConfig) GetLocalityLbSetting() *v1alpha3.LocalityLoadBalancerSettin
 	return nil
 }
 
-func (x *MeshConfig) GetDnsRefreshRate() *duration.Duration {
+func (x *MeshConfig) GetDnsRefreshRate() *durationpb.Duration {
 	if x != nil {
 		return x.DnsRefreshRate
 	}
@@ -1213,7 +1213,7 @@ func (x *MeshConfig) GetServiceSettings() []*MeshConfig_ServiceSettings {
 	return nil
 }
 
-func (x *MeshConfig) GetEnablePrometheusMerge() *wrappers.BoolValue {
+func (x *MeshConfig) GetEnablePrometheusMerge() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.EnablePrometheusMerge
 	}
@@ -1221,7 +1221,7 @@ func (x *MeshConfig) GetEnablePrometheusMerge() *wrappers.BoolValue {
 }
 
 // Deprecated: Marked as deprecated in mesh/v1alpha1/config.proto.
-func (x *MeshConfig) GetVerifyCertificateAtClient() *wrappers.BoolValue {
+func (x *MeshConfig) GetVerifyCertificateAtClient() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.VerifyCertificateAtClient
 	}
@@ -1743,7 +1743,7 @@ type MeshConfig_CA struct {
 	TlsSettings *v1alpha3.ClientTLSSettings `protobuf:"bytes,2,opt,name=tls_settings,json=tlsSettings,proto3" json:"tls_settings,omitempty"`
 	// timeout for forward CSR requests from Istiod to External CA
 	// Default: 10s
-	RequestTimeout *duration.Duration `protobuf:"bytes,3,opt,name=request_timeout,json=requestTimeout,proto3" json:"request_timeout,omitempty"`
+	RequestTimeout *durationpb.Duration `protobuf:"bytes,3,opt,name=request_timeout,json=requestTimeout,proto3" json:"request_timeout,omitempty"`
 	// Use istiod_side to specify CA Server integrate to Istiod side or Agent side
 	// Default: true
 	IstiodSide bool `protobuf:"varint,4,opt,name=istiod_side,json=istiodSide,proto3" json:"istiod_side,omitempty"`
@@ -1795,7 +1795,7 @@ func (x *MeshConfig_CA) GetTlsSettings() *v1alpha3.ClientTLSSettings {
 	return nil
 }
 
-func (x *MeshConfig_CA) GetRequestTimeout() *duration.Duration {
+func (x *MeshConfig_CA) GetRequestTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.RequestTimeout
 	}
@@ -2451,7 +2451,7 @@ type MeshConfig_ExtensionProvider_EnvoyExternalAuthorizationHttpProvider struct 
 	// The maximum duration that the proxy will wait for a response from the provider (default timeout: 600s).
 	// When this timeout condition is met, the proxy marks the communication to the authorization service as failure.
 	// In this situation, the response sent back to the client will depend on the configured `fail_open` field.
-	Timeout *duration.Duration `protobuf:"bytes,9,opt,name=timeout,proto3" json:"timeout,omitempty"`
+	Timeout *durationpb.Duration `protobuf:"bytes,9,opt,name=timeout,proto3" json:"timeout,omitempty"`
 	// Sets a prefix to the value of authorization request header *Path*.
 	// For example, setting this to "/check" for an original user request at path "/admin" will cause the
 	// authorization check request to be sent to the authorization service at the path "/check/admin" instead of "/admin".
@@ -2574,7 +2574,7 @@ func (x *MeshConfig_ExtensionProvider_EnvoyExternalAuthorizationHttpProvider) Ge
 	return 0
 }
 
-func (x *MeshConfig_ExtensionProvider_EnvoyExternalAuthorizationHttpProvider) GetTimeout() *duration.Duration {
+func (x *MeshConfig_ExtensionProvider_EnvoyExternalAuthorizationHttpProvider) GetTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.Timeout
 	}
@@ -2669,7 +2669,7 @@ type MeshConfig_ExtensionProvider_EnvoyExternalAuthorizationGrpcProvider struct 
 	// The maximum duration that the proxy will wait for a response from the provider, this is the timeout for a specific request (default timeout: 600s).
 	// When this timeout condition is met, the proxy marks the communication to the authorization service as failure.
 	// In this situation, the response sent back to the client will depend on the configured `fail_open` field.
-	Timeout *duration.Duration `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"`
+	Timeout *durationpb.Duration `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"`
 	// If true, the HTTP request or TCP connection will be allowed even if the communication with the authorization service has failed,
 	// or if the authorization service has returned a HTTP 5xx error.
 	// Default is false. For HTTP request, it will be rejected with 403 (HTTP Forbidden). For TCP connection, it will be closed immediately.
@@ -2727,7 +2727,7 @@ func (x *MeshConfig_ExtensionProvider_EnvoyExternalAuthorizationGrpcProvider) Ge
 	return 0
 }
 
-func (x *MeshConfig_ExtensionProvider_EnvoyExternalAuthorizationGrpcProvider) GetTimeout() *duration.Duration {
+func (x *MeshConfig_ExtensionProvider_EnvoyExternalAuthorizationGrpcProvider) GetTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.Timeout
 	}
@@ -3087,19 +3087,19 @@ type MeshConfig_ExtensionProvider_StackdriverProvider struct {
 	// $hide_from_docs
 	//
 	// Deprecated: Marked as deprecated in mesh/v1alpha1/config.proto.
-	MaxNumberOfAttributes *wrappers.Int64Value `protobuf:"bytes,2,opt,name=max_number_of_attributes,json=maxNumberOfAttributes,proto3" json:"max_number_of_attributes,omitempty"`
+	MaxNumberOfAttributes *wrapperspb.Int64Value `protobuf:"bytes,2,opt,name=max_number_of_attributes,json=maxNumberOfAttributes,proto3" json:"max_number_of_attributes,omitempty"`
 	// The global default max number of annotation events per span.
 	// default is 200.
 	// $hide_from_docs
 	//
 	// Deprecated: Marked as deprecated in mesh/v1alpha1/config.proto.
-	MaxNumberOfAnnotations *wrappers.Int64Value `protobuf:"bytes,3,opt,name=max_number_of_annotations,json=maxNumberOfAnnotations,proto3" json:"max_number_of_annotations,omitempty"`
+	MaxNumberOfAnnotations *wrapperspb.Int64Value `protobuf:"bytes,3,opt,name=max_number_of_annotations,json=maxNumberOfAnnotations,proto3" json:"max_number_of_annotations,omitempty"`
 	// The global default max number of message events per span.
 	// default is 200.
 	// $hide_from_docs
 	//
 	// Deprecated: Marked as deprecated in mesh/v1alpha1/config.proto.
-	MaxNumberOfMessageEvents *wrappers.Int64Value `protobuf:"bytes,4,opt,name=max_number_of_message_events,json=maxNumberOfMessageEvents,proto3" json:"max_number_of_message_events,omitempty"`
+	MaxNumberOfMessageEvents *wrapperspb.Int64Value `protobuf:"bytes,4,opt,name=max_number_of_message_events,json=maxNumberOfMessageEvents,proto3" json:"max_number_of_message_events,omitempty"`
 	// Optional. Controls the overall path length allowed in a reported span.
 	// NOTE: currently only controls max length of the path tag.
 	MaxTagLength uint32 `protobuf:"varint,5,opt,name=max_tag_length,json=maxTagLength,proto3" json:"max_tag_length,omitempty"`
@@ -3148,7 +3148,7 @@ func (x *MeshConfig_ExtensionProvider_StackdriverProvider) GetDebug() bool {
 }
 
 // Deprecated: Marked as deprecated in mesh/v1alpha1/config.proto.
-func (x *MeshConfig_ExtensionProvider_StackdriverProvider) GetMaxNumberOfAttributes() *wrappers.Int64Value {
+func (x *MeshConfig_ExtensionProvider_StackdriverProvider) GetMaxNumberOfAttributes() *wrapperspb.Int64Value {
 	if x != nil {
 		return x.MaxNumberOfAttributes
 	}
@@ -3156,7 +3156,7 @@ func (x *MeshConfig_ExtensionProvider_StackdriverProvider) GetMaxNumberOfAttribu
 }
 
 // Deprecated: Marked as deprecated in mesh/v1alpha1/config.proto.
-func (x *MeshConfig_ExtensionProvider_StackdriverProvider) GetMaxNumberOfAnnotations() *wrappers.Int64Value {
+func (x *MeshConfig_ExtensionProvider_StackdriverProvider) GetMaxNumberOfAnnotations() *wrapperspb.Int64Value {
 	if x != nil {
 		return x.MaxNumberOfAnnotations
 	}
@@ -3164,7 +3164,7 @@ func (x *MeshConfig_ExtensionProvider_StackdriverProvider) GetMaxNumberOfAnnotat
 }
 
 // Deprecated: Marked as deprecated in mesh/v1alpha1/config.proto.
-func (x *MeshConfig_ExtensionProvider_StackdriverProvider) GetMaxNumberOfMessageEvents() *wrappers.Int64Value {
+func (x *MeshConfig_ExtensionProvider_StackdriverProvider) GetMaxNumberOfMessageEvents() *wrapperspb.Int64Value {
 	if x != nil {
 		return x.MaxNumberOfMessageEvents
 	}
@@ -3884,7 +3884,7 @@ type MeshConfig_ExtensionProvider_HttpService struct {
 	Path string `protobuf:"bytes,1,opt,name=path,proto3" json:"path,omitempty"`
 	// Optional. Specifies the timeout for the HTTP request.
 	// If not specified, the default is 3s.
-	Timeout *duration.Duration `protobuf:"bytes,2,opt,name=timeout,proto3" json:"timeout,omitempty"`
+	Timeout *durationpb.Duration `protobuf:"bytes,2,opt,name=timeout,proto3" json:"timeout,omitempty"`
 	// Optional. Allows specifying custom HTTP headers that will be added
 	// to each HTTP request sent.
 	Headers []*MeshConfig_ExtensionProvider_HttpHeader `protobuf:"bytes,3,rep,name=headers,proto3" json:"headers,omitempty"`
@@ -3929,7 +3929,7 @@ func (x *MeshConfig_ExtensionProvider_HttpService) GetPath() string {
 	return ""
 }
 
-func (x *MeshConfig_ExtensionProvider_HttpService) GetTimeout() *duration.Duration {
+func (x *MeshConfig_ExtensionProvider_HttpService) GetTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.Timeout
 	}
@@ -4169,7 +4169,7 @@ func (x *MeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat) GetT
 	return ""
 }
 
-func (x *MeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat) GetLabels() *_struct.Struct {
+func (x *MeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat) GetLabels() *structpb.Struct {
 	if x, ok := x.GetLogFormat().(*MeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat_Labels); ok {
 		return x.Labels
 	}
@@ -4207,7 +4207,7 @@ type MeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat_Labels st
 	//	message: "%LOCAL_REPLY_BODY%"
 	//
 	// ```
-	Labels *_struct.Struct `protobuf:"bytes,2,opt,name=labels,proto3,oneof"`
+	Labels *structpb.Struct `protobuf:"bytes,2,opt,name=labels,proto3,oneof"`
 }
 
 func (*MeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat_Text) isMeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat_LogFormat() {
@@ -4243,7 +4243,7 @@ type MeshConfig_ExtensionProvider_EnvoyOpenTelemetryLogProvider_LogFormat struct
 	//	message: "%LOCAL_REPLY_BODY%"
 	//
 	// ```
-	Labels *_struct.Struct `protobuf:"bytes,2,opt,name=labels,proto3" json:"labels,omitempty"`
+	Labels *structpb.Struct `protobuf:"bytes,2,opt,name=labels,proto3" json:"labels,omitempty"`
 }
 
 func (x *MeshConfig_ExtensionProvider_EnvoyOpenTelemetryLogProvider_LogFormat) Reset() {
@@ -4285,7 +4285,7 @@ func (x *MeshConfig_ExtensionProvider_EnvoyOpenTelemetryLogProvider_LogFormat) G
 	return ""
 }
 
-func (x *MeshConfig_ExtensionProvider_EnvoyOpenTelemetryLogProvider_LogFormat) GetLabels() *_struct.Struct {
+func (x *MeshConfig_ExtensionProvider_EnvoyOpenTelemetryLogProvider_LogFormat) GetLabels() *structpb.Struct {
 	if x != nil {
 		return x.Labels
 	}
@@ -5462,16 +5462,16 @@ var file_mesh_v1alpha1_config_proto_goTypes = []interface{}{
 	(*MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler_DynatraceApi)(nil), // 47: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.OpenTelemetryTracingProvider.DynatraceSampler.DynatraceApi
 	(*MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector)(nil),              // 48: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.EnvironmentResourceDetector
 	(*MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetector)(nil),                // 49: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.DynatraceResourceDetector
-	(*duration.Duration)(nil), // 50: google.protobuf.Duration
+	(*durationpb.Duration)(nil),                                      // 50: google.protobuf.Duration
 	(*v1alpha3.ConnectionPoolSettings_TCPSettings_TcpKeepalive)(nil), // 51: istio.networking.v1alpha3.ConnectionPoolSettings.TCPSettings.TcpKeepalive
-	(*ProxyConfig)(nil),                          // 52: istio.mesh.v1alpha1.ProxyConfig
-	(*wrappers.BoolValue)(nil),                   // 53: google.protobuf.BoolValue
-	(*v1alpha3.LocalityLoadBalancerSetting)(nil), // 54: istio.networking.v1alpha3.LocalityLoadBalancerSetting
-	(*v1.LabelSelector)(nil),                     // 55: k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector
-	(*v1alpha3.HTTPRetry)(nil),                   // 56: istio.networking.v1alpha3.HTTPRetry
-	(*v1alpha3.ClientTLSSettings)(nil),           // 57: istio.networking.v1alpha3.ClientTLSSettings
-	(*wrappers.Int64Value)(nil),                  // 58: google.protobuf.Int64Value
-	(*_struct.Struct)(nil),                       // 59: google.protobuf.Struct
+	(*ProxyConfig)(nil),                                              // 52: istio.mesh.v1alpha1.ProxyConfig
+	(*wrapperspb.BoolValue)(nil),                                     // 53: google.protobuf.BoolValue
+	(*v1alpha3.LocalityLoadBalancerSetting)(nil),                     // 54: istio.networking.v1alpha3.LocalityLoadBalancerSetting
+	(*v1.LabelSelector)(nil),                                         // 55: k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector
+	(*v1alpha3.HTTPRetry)(nil),                                       // 56: istio.networking.v1alpha3.HTTPRetry
+	(*v1alpha3.ClientTLSSettings)(nil),                               // 57: istio.networking.v1alpha3.ClientTLSSettings
+	(*wrapperspb.Int64Value)(nil),                                    // 58: google.protobuf.Int64Value
+	(*structpb.Struct)(nil),                                          // 59: google.protobuf.Struct
 }
 var file_mesh_v1alpha1_config_proto_depIdxs = []int32{
 	50, // 0: istio.mesh.v1alpha1.MeshConfig.connect_timeout:type_name -> google.protobuf.Duration

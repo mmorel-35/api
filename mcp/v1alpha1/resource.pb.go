@@ -23,9 +23,9 @@
 package v1alpha1
 
 import (
-	any1 "github.com/golang/protobuf/ptypes/any"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	anypb "google.golang.org/protobuf/types/known/anypb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -47,7 +47,7 @@ type Resource struct {
 	// Common metadata describing the resource.
 	Metadata *Metadata `protobuf:"bytes,1,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	// The primary payload for the resource.
-	Body *any1.Any `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
+	Body *anypb.Any `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
 }
 
 func (x *Resource) Reset() {
@@ -89,7 +89,7 @@ func (x *Resource) GetMetadata() *Metadata {
 	return nil
 }
 
-func (x *Resource) GetBody() *any1.Any {
+func (x *Resource) GetBody() *anypb.Any {
 	if x != nil {
 		return x.Body
 	}
@@ -131,9 +131,9 @@ func file_mcp_v1alpha1_resource_proto_rawDescGZIP() []byte {
 
 var file_mcp_v1alpha1_resource_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_mcp_v1alpha1_resource_proto_goTypes = []interface{}{
-	(*Resource)(nil), // 0: istio.mcp.v1alpha1.Resource
-	(*Metadata)(nil), // 1: istio.mcp.v1alpha1.Metadata
-	(*any1.Any)(nil), // 2: google.protobuf.Any
+	(*Resource)(nil),  // 0: istio.mcp.v1alpha1.Resource
+	(*Metadata)(nil),  // 1: istio.mcp.v1alpha1.Metadata
+	(*anypb.Any)(nil), // 2: google.protobuf.Any
 }
 var file_mcp_v1alpha1_resource_proto_depIdxs = []int32{
 	1, // 0: istio.mcp.v1alpha1.Resource.metadata:type_name -> istio.mcp.v1alpha1.Metadata

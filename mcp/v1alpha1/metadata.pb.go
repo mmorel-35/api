@@ -21,9 +21,9 @@
 package v1alpha1
 
 import (
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -75,7 +75,7 @@ type Metadata struct {
 	//	"/<k8s resource name>"
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The creation timestamp of the resource.
-	CreateTime *timestamp.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Resource version. This is used to determine when resources change across
 	// resource updates. It should be treated as opaque by consumers/sinks.
 	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
@@ -126,7 +126,7 @@ func (x *Metadata) GetName() string {
 	return ""
 }
 
-func (x *Metadata) GetCreateTime() *timestamp.Timestamp {
+func (x *Metadata) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
@@ -205,10 +205,10 @@ func file_mcp_v1alpha1_metadata_proto_rawDescGZIP() []byte {
 
 var file_mcp_v1alpha1_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_mcp_v1alpha1_metadata_proto_goTypes = []interface{}{
-	(*Metadata)(nil),            // 0: istio.mcp.v1alpha1.Metadata
-	nil,                         // 1: istio.mcp.v1alpha1.Metadata.LabelsEntry
-	nil,                         // 2: istio.mcp.v1alpha1.Metadata.AnnotationsEntry
-	(*timestamp.Timestamp)(nil), // 3: google.protobuf.Timestamp
+	(*Metadata)(nil),              // 0: istio.mcp.v1alpha1.Metadata
+	nil,                           // 1: istio.mcp.v1alpha1.Metadata.LabelsEntry
+	nil,                           // 2: istio.mcp.v1alpha1.Metadata.AnnotationsEntry
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_mcp_v1alpha1_metadata_proto_depIdxs = []int32{
 	3, // 0: istio.mcp.v1alpha1.Metadata.create_time:type_name -> google.protobuf.Timestamp

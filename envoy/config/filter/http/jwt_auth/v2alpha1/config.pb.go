@@ -21,9 +21,9 @@
 package v2alpha1
 
 import (
-	duration "github.com/golang/protobuf/ptypes/duration"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -60,7 +60,7 @@ type HttpUri struct {
 	//	*HttpUri_Cluster
 	HttpUpstreamType isHttpUri_HttpUpstreamType `protobuf_oneof:"http_upstream_type"`
 	// Sets the maximum duration in milliseconds that a response can take to arrive upon request.
-	Timeout *duration.Duration `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"`
+	Timeout *durationpb.Duration `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"`
 }
 
 func (x *HttpUri) Reset() {
@@ -116,7 +116,7 @@ func (x *HttpUri) GetCluster() string {
 	return ""
 }
 
-func (x *HttpUri) GetTimeout() *duration.Duration {
+func (x *HttpUri) GetTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.Timeout
 	}
@@ -490,7 +490,7 @@ type RemoteJwks struct {
 	HttpUri *HttpUri `protobuf:"bytes,1,opt,name=http_uri,json=httpUri,proto3" json:"http_uri,omitempty"`
 	// Duration after which the cached JWKS should be expired. If not specified, default cache
 	// duration is 5 minutes.
-	CacheDuration *duration.Duration `protobuf:"bytes,2,opt,name=cache_duration,json=cacheDuration,proto3" json:"cache_duration,omitempty"`
+	CacheDuration *durationpb.Duration `protobuf:"bytes,2,opt,name=cache_duration,json=cacheDuration,proto3" json:"cache_duration,omitempty"`
 }
 
 func (x *RemoteJwks) Reset() {
@@ -532,7 +532,7 @@ func (x *RemoteJwks) GetHttpUri() *HttpUri {
 	return nil
 }
 
-func (x *RemoteJwks) GetCacheDuration() *duration.Duration {
+func (x *RemoteJwks) GetCacheDuration() *durationpb.Duration {
 	if x != nil {
 		return x.CacheDuration
 	}
@@ -763,13 +763,13 @@ func file_envoy_config_filter_http_jwt_auth_v2alpha1_config_proto_rawDescGZIP() 
 
 var file_envoy_config_filter_http_jwt_auth_v2alpha1_config_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_envoy_config_filter_http_jwt_auth_v2alpha1_config_proto_goTypes = []interface{}{
-	(*HttpUri)(nil),           // 0: istio.envoy.config.filter.http.jwt_auth.v2alpha1.HttpUri
-	(*DataSource)(nil),        // 1: istio.envoy.config.filter.http.jwt_auth.v2alpha1.DataSource
-	(*JwtRule)(nil),           // 2: istio.envoy.config.filter.http.jwt_auth.v2alpha1.JwtRule
-	(*RemoteJwks)(nil),        // 3: istio.envoy.config.filter.http.jwt_auth.v2alpha1.RemoteJwks
-	(*JwtHeader)(nil),         // 4: istio.envoy.config.filter.http.jwt_auth.v2alpha1.JwtHeader
-	(*JwtAuthentication)(nil), // 5: istio.envoy.config.filter.http.jwt_auth.v2alpha1.JwtAuthentication
-	(*duration.Duration)(nil), // 6: google.protobuf.Duration
+	(*HttpUri)(nil),             // 0: istio.envoy.config.filter.http.jwt_auth.v2alpha1.HttpUri
+	(*DataSource)(nil),          // 1: istio.envoy.config.filter.http.jwt_auth.v2alpha1.DataSource
+	(*JwtRule)(nil),             // 2: istio.envoy.config.filter.http.jwt_auth.v2alpha1.JwtRule
+	(*RemoteJwks)(nil),          // 3: istio.envoy.config.filter.http.jwt_auth.v2alpha1.RemoteJwks
+	(*JwtHeader)(nil),           // 4: istio.envoy.config.filter.http.jwt_auth.v2alpha1.JwtHeader
+	(*JwtAuthentication)(nil),   // 5: istio.envoy.config.filter.http.jwt_auth.v2alpha1.JwtAuthentication
+	(*durationpb.Duration)(nil), // 6: google.protobuf.Duration
 }
 var file_envoy_config_filter_http_jwt_auth_v2alpha1_config_proto_depIdxs = []int32{
 	6, // 0: istio.envoy.config.filter.http.jwt_auth.v2alpha1.HttpUri.timeout:type_name -> google.protobuf.Duration

@@ -99,11 +99,11 @@
 package v1
 
 import (
-	duration "github.com/golang/protobuf/ptypes/duration"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	v1beta1 "istio.io/api/type/v1beta1"
 	reflect "reflect"
 	sync "sync"
@@ -800,7 +800,7 @@ type LoadBalancerSettings struct {
 	// endpoints are relatively new like new deployment, this is not very effective as all endpoints end up getting same
 	// amount of requests.
 	// Currently this is only supported for ROUND_ROBIN and LEAST_REQUEST load balancers.
-	WarmupDurationSecs *duration.Duration `protobuf:"bytes,4,opt,name=warmup_duration_secs,json=warmupDurationSecs,proto3" json:"warmup_duration_secs,omitempty"`
+	WarmupDurationSecs *durationpb.Duration `protobuf:"bytes,4,opt,name=warmup_duration_secs,json=warmupDurationSecs,proto3" json:"warmup_duration_secs,omitempty"`
 }
 
 func (x *LoadBalancerSettings) Reset() {
@@ -863,7 +863,7 @@ func (x *LoadBalancerSettings) GetLocalityLbSetting() *LocalityLoadBalancerSetti
 	return nil
 }
 
-func (x *LoadBalancerSettings) GetWarmupDurationSecs() *duration.Duration {
+func (x *LoadBalancerSettings) GetWarmupDurationSecs() *durationpb.Duration {
 	if x != nil {
 		return x.WarmupDurationSecs
 	}
@@ -1037,7 +1037,7 @@ type OutlierDetection struct {
 	// The number of consecutive locally originated failures before ejection
 	// occurs. Defaults to 5. Parameter takes effect only when split_external_local_origin_errors
 	// is set to true.
-	ConsecutiveLocalOriginFailures *wrappers.UInt32Value `protobuf:"bytes,9,opt,name=consecutive_local_origin_failures,json=consecutiveLocalOriginFailures,proto3" json:"consecutive_local_origin_failures,omitempty"`
+	ConsecutiveLocalOriginFailures *wrapperspb.UInt32Value `protobuf:"bytes,9,opt,name=consecutive_local_origin_failures,json=consecutiveLocalOriginFailures,proto3" json:"consecutive_local_origin_failures,omitempty"`
 	// Number of gateway errors before a host is ejected from the connection pool.
 	// When the upstream host is accessed over HTTP, a 502, 503, or 504 return
 	// code qualifies as a gateway error. When the upstream host is accessed over
@@ -1051,7 +1051,7 @@ type OutlierDetection struct {
 	// if the value of consecutive_gateway_errors is greater than or equal to
 	// the value of consecutive_5xx_errors, consecutive_gateway_errors will have
 	// no effect.
-	ConsecutiveGatewayErrors *wrappers.UInt32Value `protobuf:"bytes,6,opt,name=consecutive_gateway_errors,json=consecutiveGatewayErrors,proto3" json:"consecutive_gateway_errors,omitempty"`
+	ConsecutiveGatewayErrors *wrapperspb.UInt32Value `protobuf:"bytes,6,opt,name=consecutive_gateway_errors,json=consecutiveGatewayErrors,proto3" json:"consecutive_gateway_errors,omitempty"`
 	// Number of 5xx errors before a host is ejected from the connection pool.
 	// When the upstream host is accessed over an opaque TCP connection, connect
 	// timeouts, connection error/failure and request failure events qualify as a
@@ -1064,16 +1064,16 @@ type OutlierDetection struct {
 	// if the value of consecutive_gateway_errors is greater than or equal to
 	// the value of consecutive_5xx_errors, consecutive_gateway_errors will have
 	// no effect.
-	Consecutive_5XxErrors *wrappers.UInt32Value `protobuf:"bytes,7,opt,name=consecutive_5xx_errors,json=consecutive5xxErrors,proto3" json:"consecutive_5xx_errors,omitempty"`
+	Consecutive_5XxErrors *wrapperspb.UInt32Value `protobuf:"bytes,7,opt,name=consecutive_5xx_errors,json=consecutive5xxErrors,proto3" json:"consecutive_5xx_errors,omitempty"`
 	// Time interval between ejection sweep analysis. format:
 	// 1h/1m/1s/1ms. MUST BE >=1ms. Default is 10s.
-	Interval *duration.Duration `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"`
+	Interval *durationpb.Duration `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"`
 	// Minimum ejection duration. A host will remain ejected for a period
 	// equal to the product of minimum ejection duration and the number of
 	// times the host has been ejected. This technique allows the system to
 	// automatically increase the ejection period for unhealthy upstream
 	// servers. format: 1h/1m/1s/1ms. MUST BE >=1ms. Default is 30s.
-	BaseEjectionTime *duration.Duration `protobuf:"bytes,3,opt,name=base_ejection_time,json=baseEjectionTime,proto3" json:"base_ejection_time,omitempty"`
+	BaseEjectionTime *durationpb.Duration `protobuf:"bytes,3,opt,name=base_ejection_time,json=baseEjectionTime,proto3" json:"base_ejection_time,omitempty"`
 	// Maximum % of hosts in the load balancing pool for the upstream
 	// service that can be ejected. Defaults to 10%.
 	MaxEjectionPercent int32 `protobuf:"varint,4,opt,name=max_ejection_percent,json=maxEjectionPercent,proto3" json:"max_ejection_percent,omitempty"`
@@ -1134,35 +1134,35 @@ func (x *OutlierDetection) GetSplitExternalLocalOriginErrors() bool {
 	return false
 }
 
-func (x *OutlierDetection) GetConsecutiveLocalOriginFailures() *wrappers.UInt32Value {
+func (x *OutlierDetection) GetConsecutiveLocalOriginFailures() *wrapperspb.UInt32Value {
 	if x != nil {
 		return x.ConsecutiveLocalOriginFailures
 	}
 	return nil
 }
 
-func (x *OutlierDetection) GetConsecutiveGatewayErrors() *wrappers.UInt32Value {
+func (x *OutlierDetection) GetConsecutiveGatewayErrors() *wrapperspb.UInt32Value {
 	if x != nil {
 		return x.ConsecutiveGatewayErrors
 	}
 	return nil
 }
 
-func (x *OutlierDetection) GetConsecutive_5XxErrors() *wrappers.UInt32Value {
+func (x *OutlierDetection) GetConsecutive_5XxErrors() *wrapperspb.UInt32Value {
 	if x != nil {
 		return x.Consecutive_5XxErrors
 	}
 	return nil
 }
 
-func (x *OutlierDetection) GetInterval() *duration.Duration {
+func (x *OutlierDetection) GetInterval() *durationpb.Duration {
 	if x != nil {
 		return x.Interval
 	}
 	return nil
 }
 
-func (x *OutlierDetection) GetBaseEjectionTime() *duration.Duration {
+func (x *OutlierDetection) GetBaseEjectionTime() *durationpb.Duration {
 	if x != nil {
 		return x.BaseEjectionTime
 	}
@@ -1303,7 +1303,7 @@ type ClientTLSSettings struct {
 	// `insecureSkipVerify` specifies whether the proxy should skip verifying the
 	// CA signature and SAN for the server certificate corresponding to the host.
 	// The default value of this field is false.
-	InsecureSkipVerify *wrappers.BoolValue `protobuf:"bytes,8,opt,name=insecure_skip_verify,json=insecureSkipVerify,proto3" json:"insecure_skip_verify,omitempty"`
+	InsecureSkipVerify *wrapperspb.BoolValue `protobuf:"bytes,8,opt,name=insecure_skip_verify,json=insecureSkipVerify,proto3" json:"insecure_skip_verify,omitempty"`
 	// OPTIONAL: The path to the file containing the certificate revocation list (CRL)
 	// to use in verifying a presented server certificate. `CRL` is a list of certificates
 	// that have been revoked by the CA (Certificate Authority) before their scheduled expiration date.
@@ -1393,7 +1393,7 @@ func (x *ClientTLSSettings) GetSni() string {
 	return ""
 }
 
-func (x *ClientTLSSettings) GetInsecureSkipVerify() *wrappers.BoolValue {
+func (x *ClientTLSSettings) GetInsecureSkipVerify() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.InsecureSkipVerify
 	}
@@ -1537,7 +1537,7 @@ type LocalityLoadBalancerSetting struct {
 	FailoverPriority []string `protobuf:"bytes,4,rep,name=failover_priority,json=failoverPriority,proto3" json:"failover_priority,omitempty"`
 	// enable locality load balancing, this is DestinationRule-level and will override mesh wide settings in entirety.
 	// e.g. true means that turn on locality load balancing for this DestinationRule no matter what mesh wide settings is.
-	Enabled *wrappers.BoolValue `protobuf:"bytes,3,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Enabled *wrapperspb.BoolValue `protobuf:"bytes,3,opt,name=enabled,proto3" json:"enabled,omitempty"`
 }
 
 func (x *LocalityLoadBalancerSetting) Reset() {
@@ -1593,7 +1593,7 @@ func (x *LocalityLoadBalancerSetting) GetFailoverPriority() []string {
 	return nil
 }
 
-func (x *LocalityLoadBalancerSetting) GetEnabled() *wrappers.BoolValue {
+func (x *LocalityLoadBalancerSetting) GetEnabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Enabled
 	}
@@ -2125,7 +2125,7 @@ type LoadBalancerSettings_ConsistentHashLB_HTTPCookie struct {
 	// Lifetime of the cookie. If specified, a cookie with the TTL will be
 	// generated if the cookie is not present. If the TTL is present and zero,
 	// the generated cookie will be a session cookie.
-	Ttl *duration.Duration `protobuf:"bytes,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	Ttl *durationpb.Duration `protobuf:"bytes,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
 }
 
 func (x *LoadBalancerSettings_ConsistentHashLB_HTTPCookie) Reset() {
@@ -2174,7 +2174,7 @@ func (x *LoadBalancerSettings_ConsistentHashLB_HTTPCookie) GetPath() string {
 	return ""
 }
 
-func (x *LoadBalancerSettings_ConsistentHashLB_HTTPCookie) GetTtl() *duration.Duration {
+func (x *LoadBalancerSettings_ConsistentHashLB_HTTPCookie) GetTtl() *durationpb.Duration {
 	if x != nil {
 		return x.Ttl
 	}
@@ -2191,13 +2191,13 @@ type ConnectionPoolSettings_TCPSettings struct {
 	MaxConnections int32 `protobuf:"varint,1,opt,name=max_connections,json=maxConnections,proto3" json:"max_connections,omitempty"`
 	// TCP connection timeout. format:
 	// 1h/1m/1s/1ms. MUST BE >=1ms. Default is 10s.
-	ConnectTimeout *duration.Duration `protobuf:"bytes,2,opt,name=connect_timeout,json=connectTimeout,proto3" json:"connect_timeout,omitempty"`
+	ConnectTimeout *durationpb.Duration `protobuf:"bytes,2,opt,name=connect_timeout,json=connectTimeout,proto3" json:"connect_timeout,omitempty"`
 	// If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
 	TcpKeepalive *ConnectionPoolSettings_TCPSettings_TcpKeepalive `protobuf:"bytes,3,opt,name=tcp_keepalive,json=tcpKeepalive,proto3" json:"tcp_keepalive,omitempty"`
 	// The maximum duration of a connection. The duration is defined as the period since a connection
 	// was established. If not set, there is no max duration. When max_connection_duration
 	// is reached the connection will be closed. Duration must be at least 1ms.
-	MaxConnectionDuration *duration.Duration `protobuf:"bytes,4,opt,name=max_connection_duration,json=maxConnectionDuration,proto3" json:"max_connection_duration,omitempty"`
+	MaxConnectionDuration *durationpb.Duration `protobuf:"bytes,4,opt,name=max_connection_duration,json=maxConnectionDuration,proto3" json:"max_connection_duration,omitempty"`
 	// The idle timeout for TCP connections.
 	// The idle timeout is defined as the period in which there are no bytes sent or received on either
 	// the upstream or downstream connection.
@@ -2206,7 +2206,7 @@ type ConnectionPoolSettings_TCPSettings struct {
 	// because idleTimeout is a property of a listener, not a cluster. In that case, idleTimeout
 	// specified in a destination rule for the first weighted route is configured in the listener,
 	// which means also for all weighted routes.
-	IdleTimeout *duration.Duration `protobuf:"bytes,5,opt,name=idle_timeout,json=idleTimeout,proto3" json:"idle_timeout,omitempty"`
+	IdleTimeout *durationpb.Duration `protobuf:"bytes,5,opt,name=idle_timeout,json=idleTimeout,proto3" json:"idle_timeout,omitempty"`
 }
 
 func (x *ConnectionPoolSettings_TCPSettings) Reset() {
@@ -2248,7 +2248,7 @@ func (x *ConnectionPoolSettings_TCPSettings) GetMaxConnections() int32 {
 	return 0
 }
 
-func (x *ConnectionPoolSettings_TCPSettings) GetConnectTimeout() *duration.Duration {
+func (x *ConnectionPoolSettings_TCPSettings) GetConnectTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.ConnectTimeout
 	}
@@ -2262,14 +2262,14 @@ func (x *ConnectionPoolSettings_TCPSettings) GetTcpKeepalive() *ConnectionPoolSe
 	return nil
 }
 
-func (x *ConnectionPoolSettings_TCPSettings) GetMaxConnectionDuration() *duration.Duration {
+func (x *ConnectionPoolSettings_TCPSettings) GetMaxConnectionDuration() *durationpb.Duration {
 	if x != nil {
 		return x.MaxConnectionDuration
 	}
 	return nil
 }
 
-func (x *ConnectionPoolSettings_TCPSettings) GetIdleTimeout() *duration.Duration {
+func (x *ConnectionPoolSettings_TCPSettings) GetIdleTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.IdleTimeout
 	}
@@ -2305,7 +2305,7 @@ type ConnectionPoolSettings_HTTPSettings struct {
 	// connection a drain sequence will occur prior to closing the connection.
 	// Note that request based timeouts mean that HTTP/2 PINGs will not
 	// keep the connection alive. Applies to both HTTP1.1 and HTTP2 connections.
-	IdleTimeout *duration.Duration `protobuf:"bytes,5,opt,name=idle_timeout,json=idleTimeout,proto3" json:"idle_timeout,omitempty"`
+	IdleTimeout *durationpb.Duration `protobuf:"bytes,5,opt,name=idle_timeout,json=idleTimeout,proto3" json:"idle_timeout,omitempty"`
 	// Specify if http1.1 connection should be upgraded to http2 for the associated destination.
 	H2UpgradePolicy ConnectionPoolSettings_HTTPSettings_H2UpgradePolicy `protobuf:"varint,6,opt,name=h2_upgrade_policy,json=h2UpgradePolicy,proto3,enum=istio.networking.v1.ConnectionPoolSettings_HTTPSettings_H2UpgradePolicy" json:"h2_upgrade_policy,omitempty"`
 	// If set to true, client protocol will be preserved while initiating connection to backend.
@@ -2377,7 +2377,7 @@ func (x *ConnectionPoolSettings_HTTPSettings) GetMaxRetries() int32 {
 	return 0
 }
 
-func (x *ConnectionPoolSettings_HTTPSettings) GetIdleTimeout() *duration.Duration {
+func (x *ConnectionPoolSettings_HTTPSettings) GetIdleTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.IdleTimeout
 	}
@@ -2418,11 +2418,11 @@ type ConnectionPoolSettings_TCPSettings_TcpKeepalive struct {
 	// The time duration a connection needs to be idle before keep-alive
 	// probes start being sent. Default is to use the OS level configuration
 	// (unless overridden, Linux defaults to 7200s (ie 2 hours.)
-	Time *duration.Duration `protobuf:"bytes,2,opt,name=time,proto3" json:"time,omitempty"`
+	Time *durationpb.Duration `protobuf:"bytes,2,opt,name=time,proto3" json:"time,omitempty"`
 	// The time duration between keep-alive probes.
 	// Default is to use the OS level configuration
 	// (unless overridden, Linux defaults to 75s.)
-	Interval *duration.Duration `protobuf:"bytes,3,opt,name=interval,proto3" json:"interval,omitempty"`
+	Interval *durationpb.Duration `protobuf:"bytes,3,opt,name=interval,proto3" json:"interval,omitempty"`
 }
 
 func (x *ConnectionPoolSettings_TCPSettings_TcpKeepalive) Reset() {
@@ -2464,14 +2464,14 @@ func (x *ConnectionPoolSettings_TCPSettings_TcpKeepalive) GetProbes() uint32 {
 	return 0
 }
 
-func (x *ConnectionPoolSettings_TCPSettings_TcpKeepalive) GetTime() *duration.Duration {
+func (x *ConnectionPoolSettings_TCPSettings_TcpKeepalive) GetTime() *durationpb.Duration {
 	if x != nil {
 		return x.Time
 	}
 	return nil
 }
 
-func (x *ConnectionPoolSettings_TCPSettings_TcpKeepalive) GetInterval() *duration.Duration {
+func (x *ConnectionPoolSettings_TCPSettings_TcpKeepalive) GetInterval() *durationpb.Duration {
 	if x != nil {
 		return x.Interval
 	}
@@ -3047,9 +3047,9 @@ var file_networking_v1_destination_rule_proto_goTypes = []interface{}{
 	(*LocalityLoadBalancerSetting_Failover)(nil),             // 24: istio.networking.v1.LocalityLoadBalancerSetting.Failover
 	nil,                              // 25: istio.networking.v1.LocalityLoadBalancerSetting.Distribute.ToEntry
 	(*v1beta1.WorkloadSelector)(nil), // 26: istio.type.v1beta1.WorkloadSelector
-	(*duration.Duration)(nil),        // 27: google.protobuf.Duration
-	(*wrappers.UInt32Value)(nil),     // 28: google.protobuf.UInt32Value
-	(*wrappers.BoolValue)(nil),       // 29: google.protobuf.BoolValue
+	(*durationpb.Duration)(nil),      // 27: google.protobuf.Duration
+	(*wrapperspb.UInt32Value)(nil),   // 28: google.protobuf.UInt32Value
+	(*wrapperspb.BoolValue)(nil),     // 29: google.protobuf.BoolValue
 	(*PortSelector)(nil),             // 30: istio.networking.v1.PortSelector
 }
 var file_networking_v1_destination_rule_proto_depIdxs = []int32{

@@ -399,9 +399,9 @@
 package v1alpha3
 
 import (
-	_struct "github.com/golang/protobuf/ptypes/struct"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	v1beta1 "istio.io/api/type/v1beta1"
 	reflect "reflect"
 	sync "sync"
@@ -1296,7 +1296,7 @@ type EnvoyFilter_Patch struct {
 	Operation EnvoyFilter_Patch_Operation `protobuf:"varint,1,opt,name=operation,proto3,enum=istio.networking.v1alpha3.EnvoyFilter_Patch_Operation" json:"operation,omitempty"`
 	// The JSON config of the object being patched. This will be merged using
 	// proto merge semantics with the existing proto in the path.
-	Value *_struct.Struct `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Value *structpb.Struct `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	// Determines the filter insertion order.
 	FilterClass EnvoyFilter_Patch_FilterClass `protobuf:"varint,3,opt,name=filter_class,json=filterClass,proto3,enum=istio.networking.v1alpha3.EnvoyFilter_Patch_FilterClass" json:"filter_class,omitempty"`
 }
@@ -1340,7 +1340,7 @@ func (x *EnvoyFilter_Patch) GetOperation() EnvoyFilter_Patch_Operation {
 	return EnvoyFilter_Patch_INVALID
 }
 
-func (x *EnvoyFilter_Patch) GetValue() *_struct.Struct {
+func (x *EnvoyFilter_Patch) GetValue() *structpb.Struct {
 	if x != nil {
 		return x.Value
 	}
@@ -2174,7 +2174,7 @@ var file_networking_v1alpha3_envoy_filter_proto_goTypes = []interface{}{
 	(*EnvoyFilter_ListenerMatch_SubFilterMatch)(nil),             // 18: istio.networking.v1alpha3.EnvoyFilter.ListenerMatch.SubFilterMatch
 	(*WorkloadSelector)(nil),                                     // 19: istio.networking.v1alpha3.WorkloadSelector
 	(*v1beta1.PolicyTargetReference)(nil),                        // 20: istio.type.v1beta1.PolicyTargetReference
-	(*_struct.Struct)(nil),                                       // 21: google.protobuf.Struct
+	(*structpb.Struct)(nil),                                      // 21: google.protobuf.Struct
 }
 var file_networking_v1alpha3_envoy_filter_proto_depIdxs = []int32{
 	19, // 0: istio.networking.v1alpha3.EnvoyFilter.workload_selector:type_name -> istio.networking.v1alpha3.WorkloadSelector

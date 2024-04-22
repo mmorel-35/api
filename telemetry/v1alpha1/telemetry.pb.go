@@ -233,11 +233,11 @@
 package v1alpha1
 
 import (
-	duration "github.com/golang/protobuf/ptypes/duration"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	v1beta1 "istio.io/api/type/v1beta1"
 	reflect "reflect"
 	sync "sync"
@@ -695,11 +695,11 @@ type Tracing struct {
 	// increments.
 	// +kubebuilder:validation:Minimum=0
 	// +kubebuilder:validation:Maximum=100
-	RandomSamplingPercentage *wrappers.DoubleValue `protobuf:"bytes,3,opt,name=random_sampling_percentage,json=randomSamplingPercentage,proto3" json:"random_sampling_percentage,omitempty"`
+	RandomSamplingPercentage *wrapperspb.DoubleValue `protobuf:"bytes,3,opt,name=random_sampling_percentage,json=randomSamplingPercentage,proto3" json:"random_sampling_percentage,omitempty"`
 	// Controls span reporting. If set to true, no spans will be reported for
 	// impacted workloads. This does NOT impact context propagation or trace
 	// sampling behavior.
-	DisableSpanReporting *wrappers.BoolValue `protobuf:"bytes,4,opt,name=disable_span_reporting,json=disableSpanReporting,proto3" json:"disable_span_reporting,omitempty"`
+	DisableSpanReporting *wrapperspb.BoolValue `protobuf:"bytes,4,opt,name=disable_span_reporting,json=disableSpanReporting,proto3" json:"disable_span_reporting,omitempty"`
 	// Optional. Configures additional custom tags to the generated trace spans.
 	CustomTags map[string]*Tracing_CustomTag `protobuf:"bytes,5,rep,name=custom_tags,json=customTags,proto3" json:"custom_tags,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	// This value is true by default; Envoy decides whether or not to sample based
@@ -714,7 +714,7 @@ type Tracing struct {
 	// provides more information on Request ID handling.
 	// $hide_from_docs
 	// +cue-gen:Telemetry:releaseChannel:extended
-	UseRequestIdForTraceSampling *wrappers.BoolValue `protobuf:"bytes,6,opt,name=use_request_id_for_trace_sampling,json=useRequestIdForTraceSampling,proto3" json:"use_request_id_for_trace_sampling,omitempty"`
+	UseRequestIdForTraceSampling *wrapperspb.BoolValue `protobuf:"bytes,6,opt,name=use_request_id_for_trace_sampling,json=useRequestIdForTraceSampling,proto3" json:"use_request_id_for_trace_sampling,omitempty"`
 }
 
 func (x *Tracing) Reset() {
@@ -763,14 +763,14 @@ func (x *Tracing) GetProviders() []*ProviderRef {
 	return nil
 }
 
-func (x *Tracing) GetRandomSamplingPercentage() *wrappers.DoubleValue {
+func (x *Tracing) GetRandomSamplingPercentage() *wrapperspb.DoubleValue {
 	if x != nil {
 		return x.RandomSamplingPercentage
 	}
 	return nil
 }
 
-func (x *Tracing) GetDisableSpanReporting() *wrappers.BoolValue {
+func (x *Tracing) GetDisableSpanReporting() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.DisableSpanReporting
 	}
@@ -784,7 +784,7 @@ func (x *Tracing) GetCustomTags() map[string]*Tracing_CustomTag {
 	return nil
 }
 
-func (x *Tracing) GetUseRequestIdForTraceSampling() *wrappers.BoolValue {
+func (x *Tracing) GetUseRequestIdForTraceSampling() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.UseRequestIdForTraceSampling
 	}
@@ -873,7 +873,7 @@ type Metrics struct {
 	// This currently only supports TCP metrics but we may use this for long duration HTTP streams in the future.
 	// The default duration is `5s`.
 	// +cue-gen:Telemetry:releaseChannel:extended
-	ReportingInterval *duration.Duration `protobuf:"bytes,3,opt,name=reporting_interval,json=reportingInterval,proto3" json:"reporting_interval,omitempty"`
+	ReportingInterval *durationpb.Duration `protobuf:"bytes,3,opt,name=reporting_interval,json=reportingInterval,proto3" json:"reporting_interval,omitempty"`
 }
 
 func (x *Metrics) Reset() {
@@ -922,7 +922,7 @@ func (x *Metrics) GetOverrides() []*MetricsOverrides {
 	return nil
 }
 
-func (x *Metrics) GetReportingInterval() *duration.Duration {
+func (x *Metrics) GetReportingInterval() *durationpb.Duration {
 	if x != nil {
 		return x.ReportingInterval
 	}
@@ -1046,7 +1046,7 @@ type MetricsOverrides struct {
 	// for the listed metrics. If disabled has been set to `true` in a parent
 	// configuration, it must explicitly be set to `false` to turn metrics
 	// reporting on in the workloads selected by the Telemetry resource.
-	Disabled *wrappers.BoolValue `protobuf:"bytes,2,opt,name=disabled,proto3" json:"disabled,omitempty"`
+	Disabled *wrapperspb.BoolValue `protobuf:"bytes,2,opt,name=disabled,proto3" json:"disabled,omitempty"`
 	// Optional. Collection of tag names and tag expressions to override in the
 	// selected metric(s).
 	// The key in the map is the name of the tag.
@@ -1095,7 +1095,7 @@ func (x *MetricsOverrides) GetMatch() *MetricSelector {
 	return nil
 }
 
-func (x *MetricsOverrides) GetDisabled() *wrappers.BoolValue {
+func (x *MetricsOverrides) GetDisabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Disabled
 	}
@@ -1128,7 +1128,7 @@ type AccessLogging struct {
 	// NOTE: currently default behavior will be controlled by the provider(s)
 	// selected above. Customization controls will be added to this API in
 	// future releases.
-	Disabled *wrappers.BoolValue `protobuf:"bytes,2,opt,name=disabled,proto3" json:"disabled,omitempty"`
+	Disabled *wrapperspb.BoolValue `protobuf:"bytes,2,opt,name=disabled,proto3" json:"disabled,omitempty"`
 	// Optional. If specified, this filter will be used to select specific
 	// requests/connections for logging.
 	// +cue-gen:Telemetry:releaseChannel:extended
@@ -1181,7 +1181,7 @@ func (x *AccessLogging) GetProviders() []*ProviderRef {
 	return nil
 }
 
-func (x *AccessLogging) GetDisabled() *wrappers.BoolValue {
+func (x *AccessLogging) GetDisabled() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.Disabled
 	}
@@ -1963,9 +1963,9 @@ var file_telemetry_v1alpha1_telemetry_proto_goTypes = []interface{}{
 	(*AccessLogging_Filter)(nil),                // 19: istio.telemetry.v1alpha1.AccessLogging.Filter
 	(*v1beta1.WorkloadSelector)(nil),            // 20: istio.type.v1beta1.WorkloadSelector
 	(*v1beta1.PolicyTargetReference)(nil),       // 21: istio.type.v1beta1.PolicyTargetReference
-	(*wrappers.DoubleValue)(nil),                // 22: google.protobuf.DoubleValue
-	(*wrappers.BoolValue)(nil),                  // 23: google.protobuf.BoolValue
-	(*duration.Duration)(nil),                   // 24: google.protobuf.Duration
+	(*wrapperspb.DoubleValue)(nil),              // 22: google.protobuf.DoubleValue
+	(*wrapperspb.BoolValue)(nil),                // 23: google.protobuf.BoolValue
+	(*durationpb.Duration)(nil),                 // 24: google.protobuf.Duration
 }
 var file_telemetry_v1alpha1_telemetry_proto_depIdxs = []int32{
 	20, // 0: istio.telemetry.v1alpha1.Telemetry.selector:type_name -> istio.type.v1beta1.WorkloadSelector

@@ -28,9 +28,9 @@
 package v1alpha1
 
 import (
-	_struct "github.com/golang/protobuf/ptypes/struct"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -261,7 +261,7 @@ type GenericAnalysisMessage struct {
 	// Required
 	MessageBase *AnalysisMessageBase `protobuf:"bytes,1,opt,name=message_base,json=messageBase,proto3" json:"message_base,omitempty"`
 	// Any message-type specific arguments that need to get codified. Optional.
-	Args *_struct.Struct `protobuf:"bytes,2,opt,name=args,proto3" json:"args,omitempty"`
+	Args *structpb.Struct `protobuf:"bytes,2,opt,name=args,proto3" json:"args,omitempty"`
 	// A list of strings specifying the resource identifiers that were the cause
 	// of message generation. A "path" here is a (NAMESPACE\/)?RESOURCETYPE/NAME
 	// tuple that uniquely identifies a particular resource. There doesn't seem to
@@ -310,7 +310,7 @@ func (x *GenericAnalysisMessage) GetMessageBase() *AnalysisMessageBase {
 	return nil
 }
 
-func (x *GenericAnalysisMessage) GetArgs() *_struct.Struct {
+func (x *GenericAnalysisMessage) GetArgs() *structpb.Struct {
 	if x != nil {
 		return x.Args
 	}
@@ -603,7 +603,7 @@ var file_analysis_v1alpha1_message_proto_goTypes = []interface{}{
 	(*InternalErrorAnalysisMessage)(nil),      // 4: istio.analysis.v1alpha1.InternalErrorAnalysisMessage
 	(*AnalysisMessageBase_Type)(nil),          // 5: istio.analysis.v1alpha1.AnalysisMessageBase.Type
 	(*AnalysisMessageWeakSchema_ArgType)(nil), // 6: istio.analysis.v1alpha1.AnalysisMessageWeakSchema.ArgType
-	(*_struct.Struct)(nil),                    // 7: google.protobuf.Struct
+	(*structpb.Struct)(nil),                   // 7: google.protobuf.Struct
 }
 var file_analysis_v1alpha1_message_proto_depIdxs = []int32{
 	5, // 0: istio.analysis.v1alpha1.AnalysisMessageBase.type:type_name -> istio.analysis.v1alpha1.AnalysisMessageBase.Type

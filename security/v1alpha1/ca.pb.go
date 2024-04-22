@@ -23,9 +23,9 @@
 package v1alpha1
 
 import (
-	_struct "github.com/golang/protobuf/ptypes/struct"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -57,7 +57,7 @@ type IstioCertificateRequest struct {
 	// $hide_from_docs
 	// Optional: Opaque metadata provided by the XDS node to Istio.
 	// Supported metadata: WorkloadName, WorkloadIP, ClusterID
-	Metadata *_struct.Struct `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata *structpb.Struct `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
 }
 
 func (x *IstioCertificateRequest) Reset() {
@@ -106,7 +106,7 @@ func (x *IstioCertificateRequest) GetValidityDuration() int64 {
 	return 0
 }
 
-func (x *IstioCertificateRequest) GetMetadata() *_struct.Struct {
+func (x *IstioCertificateRequest) GetMetadata() *structpb.Struct {
 	if x != nil {
 		return x.Metadata
 	}
@@ -213,7 +213,7 @@ var file_security_v1alpha1_ca_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_security_v1alpha1_ca_proto_goTypes = []interface{}{
 	(*IstioCertificateRequest)(nil),  // 0: istio.v1.auth.IstioCertificateRequest
 	(*IstioCertificateResponse)(nil), // 1: istio.v1.auth.IstioCertificateResponse
-	(*_struct.Struct)(nil),           // 2: google.protobuf.Struct
+	(*structpb.Struct)(nil),          // 2: google.protobuf.Struct
 }
 var file_security_v1alpha1_ca_proto_depIdxs = []int32{
 	2, // 0: istio.v1.auth.IstioCertificateRequest.metadata:type_name -> google.protobuf.Struct

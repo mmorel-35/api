@@ -20,23 +20,28 @@ set -eu
 scripts/sync.sh
 
 # Generate all protos
-buf generate \
-  --path networking \
-  --path security \
-  --path type \
+buf generate --template buf.gen-golang.yaml
+
+# These folders have the full plugins used, as they are full CRDs.
+buf generate --template buf.gen-crd.yaml \
   --path analysis \
   --path authentication \
+  --path extensions \
   --path meta \
+  --path networking \
+  --path security \
   --path telemetry \
-  --path extensions
+  --path type
 
-# These folders do not have the full plugins used, as they are not full CRDs.
-# We pass them a custom configuration to exclude the non-required files
-buf generate --template buf.gen-noncrd.yaml \
-  --path operator \
+buf generate --template buf.gen-docs.yaml \
+  --path analysis \
+  --path authentication \
+  --path extensions \
   --path mcp \
-  --path mesh
-
-# These plugins are sent to Envoy, which uses golang/protobuf, so do not use gogo
-buf generate --template buf.gen-golang.yaml \
-  --path envoy
+  --path mesh \
+  --path meta \
+  --path networking \
+  --path operator \
+  --path security \
+  --path telemetry \
+  --path type

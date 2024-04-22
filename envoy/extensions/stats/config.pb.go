@@ -26,9 +26,9 @@
 package stats
 
 import (
-	duration "github.com/golang/protobuf/ptypes/duration"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -329,7 +329,7 @@ type PluginConfig struct {
 	DisableHostHeaderFallback bool `protobuf:"varint,6,opt,name=disable_host_header_fallback,json=disableHostHeaderFallback,proto3" json:"disable_host_header_fallback,omitempty"`
 	// Optional. Allows configuration of the time between calls out to for TCP
 	// metrics reporting. The default duration is `15s`.
-	TcpReportingDuration *duration.Duration `protobuf:"bytes,7,opt,name=tcp_reporting_duration,json=tcpReportingDuration,proto3" json:"tcp_reporting_duration,omitempty"`
+	TcpReportingDuration *durationpb.Duration `protobuf:"bytes,7,opt,name=tcp_reporting_duration,json=tcpReportingDuration,proto3" json:"tcp_reporting_duration,omitempty"`
 	// Metric overrides.
 	Metrics []*MetricConfig `protobuf:"bytes,8,rep,name=metrics,proto3" json:"metrics,omitempty"`
 	// Metric definitions.
@@ -340,11 +340,11 @@ type PluginConfig struct {
 	// Metric scope rotation interval. Set to 0 to disable the metric scope rotation.
 	// Defaults to 0.
 	// $hide_from_docs
-	RotationInterval *duration.Duration `protobuf:"bytes,11,opt,name=rotation_interval,json=rotationInterval,proto3" json:"rotation_interval,omitempty"`
+	RotationInterval *durationpb.Duration `protobuf:"bytes,11,opt,name=rotation_interval,json=rotationInterval,proto3" json:"rotation_interval,omitempty"`
 	// Metric expiry graceful deletion interval. No-op if the metric rotation is disabled.
 	// Defaults to 5m. Must be >=1s.
 	// $hide_from_docs
-	GracefulDeletionInterval *duration.Duration `protobuf:"bytes,12,opt,name=graceful_deletion_interval,json=gracefulDeletionInterval,proto3" json:"graceful_deletion_interval,omitempty"`
+	GracefulDeletionInterval *durationpb.Duration `protobuf:"bytes,12,opt,name=graceful_deletion_interval,json=gracefulDeletionInterval,proto3" json:"graceful_deletion_interval,omitempty"`
 }
 
 func (x *PluginConfig) Reset() {
@@ -421,7 +421,7 @@ func (x *PluginConfig) GetDisableHostHeaderFallback() bool {
 	return false
 }
 
-func (x *PluginConfig) GetTcpReportingDuration() *duration.Duration {
+func (x *PluginConfig) GetTcpReportingDuration() *durationpb.Duration {
 	if x != nil {
 		return x.TcpReportingDuration
 	}
@@ -449,14 +449,14 @@ func (x *PluginConfig) GetReporter() Reporter {
 	return Reporter_UNSPECIFIED
 }
 
-func (x *PluginConfig) GetRotationInterval() *duration.Duration {
+func (x *PluginConfig) GetRotationInterval() *durationpb.Duration {
 	if x != nil {
 		return x.RotationInterval
 	}
 	return nil
 }
 
-func (x *PluginConfig) GetGracefulDeletionInterval() *duration.Duration {
+func (x *PluginConfig) GetGracefulDeletionInterval() *durationpb.Duration {
 	if x != nil {
 		return x.GracefulDeletionInterval
 	}
@@ -561,13 +561,13 @@ func file_envoy_extensions_stats_config_proto_rawDescGZIP() []byte {
 var file_envoy_extensions_stats_config_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_envoy_extensions_stats_config_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_envoy_extensions_stats_config_proto_goTypes = []interface{}{
-	(MetricType)(0),           // 0: stats.MetricType
-	(Reporter)(0),             // 1: stats.Reporter
-	(*MetricConfig)(nil),      // 2: stats.MetricConfig
-	(*MetricDefinition)(nil),  // 3: stats.MetricDefinition
-	(*PluginConfig)(nil),      // 4: stats.PluginConfig
-	nil,                       // 5: stats.MetricConfig.DimensionsEntry
-	(*duration.Duration)(nil), // 6: google.protobuf.Duration
+	(MetricType)(0),             // 0: stats.MetricType
+	(Reporter)(0),               // 1: stats.Reporter
+	(*MetricConfig)(nil),        // 2: stats.MetricConfig
+	(*MetricDefinition)(nil),    // 3: stats.MetricDefinition
+	(*PluginConfig)(nil),        // 4: stats.PluginConfig
+	nil,                         // 5: stats.MetricConfig.DimensionsEntry
+	(*durationpb.Duration)(nil), // 6: google.protobuf.Duration
 }
 var file_envoy_extensions_stats_config_proto_depIdxs = []int32{
 	5, // 0: stats.MetricConfig.dimensions:type_name -> stats.MetricConfig.DimensionsEntry

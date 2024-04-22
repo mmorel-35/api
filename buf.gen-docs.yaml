@@ -1,0 +1,10 @@
+version: v1
+plugins:
+  - name: docs
+    out: .
+    opt:
+      - custom_word_list=./dictionaries/custom.txt
+      - dictionary=./dictionaries/en-US
+      - mode=html_fragment_with_front_matter
+      - per_file=true
+      - warnings=false

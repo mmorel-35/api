@@ -118,11 +118,11 @@
 package v1beta1
 
 import (
-	duration "github.com/golang/protobuf/ptypes/duration"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -648,7 +648,7 @@ type HTTPRoute struct {
 	// Redirect primitive. Rewrite will be performed before forwarding.
 	Rewrite *HTTPRewrite `protobuf:"bytes,4,opt,name=rewrite,proto3" json:"rewrite,omitempty"`
 	// Timeout for HTTP requests, default is disabled.
-	Timeout *duration.Duration `protobuf:"bytes,6,opt,name=timeout,proto3" json:"timeout,omitempty"`
+	Timeout *durationpb.Duration `protobuf:"bytes,6,opt,name=timeout,proto3" json:"timeout,omitempty"`
 	// Retry policy for HTTP requests.
 	Retries *HTTPRetry `protobuf:"bytes,7,opt,name=retries,proto3" json:"retries,omitempty"`
 	// Fault injection policy to apply on HTTP traffic at the client side.
@@ -676,7 +676,7 @@ type HTTPRoute struct {
 	// +kubebuilder:altName=mirror_percent
 	//
 	// Deprecated: Marked as deprecated in networking/v1beta1/virtual_service.proto.
-	MirrorPercent *wrappers.UInt32Value `protobuf:"bytes,18,opt,name=mirror_percent,json=mirrorPercent,proto3" json:"mirror_percent,omitempty"`
+	MirrorPercent *wrapperspb.UInt32Value `protobuf:"bytes,18,opt,name=mirror_percent,json=mirrorPercent,proto3" json:"mirror_percent,omitempty"`
 	// Percentage of the traffic to be mirrored by the `mirror` field.
 	// If this field is absent, all the traffic (100%) will be mirrored.
 	// Max value is 100.
@@ -770,7 +770,7 @@ func (x *HTTPRoute) GetRewrite() *HTTPRewrite {
 	return nil
 }
 
-func (x *HTTPRoute) GetTimeout() *duration.Duration {
+func (x *HTTPRoute) GetTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.Timeout
 	}
@@ -806,7 +806,7 @@ func (x *HTTPRoute) GetMirrors() []*HTTPMirrorPolicy {
 }
 
 // Deprecated: Marked as deprecated in networking/v1beta1/virtual_service.proto.
-func (x *HTTPRoute) GetMirrorPercent() *wrappers.UInt32Value {
+func (x *HTTPRoute) GetMirrorPercent() *wrapperspb.UInt32Value {
 	if x != nil {
 		return x.MirrorPercent
 	}
@@ -2638,7 +2638,7 @@ type HTTPRetry struct {
 	// Default is same value as request
 	// `timeout` of the [HTTP route](https://istio.io/docs/reference/config/networking/virtual-service/#HTTPRoute),
 	// which means no timeout.
-	PerTryTimeout *duration.Duration `protobuf:"bytes,2,opt,name=per_try_timeout,json=perTryTimeout,proto3" json:"per_try_timeout,omitempty"`
+	PerTryTimeout *durationpb.Duration `protobuf:"bytes,2,opt,name=per_try_timeout,json=perTryTimeout,proto3" json:"per_try_timeout,omitempty"`
 	// Specifies the conditions under which retry takes place.
 	// One or more policies can be specified using a ‘,’ delimited list.
 	// If `retry_on` specifies a valid HTTP status, it will be added to retriable_status_codes retry policy.
@@ -2647,7 +2647,7 @@ type HTTPRetry struct {
 	RetryOn string `protobuf:"bytes,3,opt,name=retry_on,json=retryOn,proto3" json:"retry_on,omitempty"`
 	// Flag to specify whether the retries should retry to other localities.
 	// See the [retry plugin configuration](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/http/http_connection_management#retry-plugin-configuration) for more details.
-	RetryRemoteLocalities *wrappers.BoolValue `protobuf:"bytes,4,opt,name=retry_remote_localities,json=retryRemoteLocalities,proto3" json:"retry_remote_localities,omitempty"`
+	RetryRemoteLocalities *wrapperspb.BoolValue `protobuf:"bytes,4,opt,name=retry_remote_localities,json=retryRemoteLocalities,proto3" json:"retry_remote_localities,omitempty"`
 }
 
 func (x *HTTPRetry) Reset() {
@@ -2689,7 +2689,7 @@ func (x *HTTPRetry) GetAttempts() int32 {
 	return 0
 }
 
-func (x *HTTPRetry) GetPerTryTimeout() *duration.Duration {
+func (x *HTTPRetry) GetPerTryTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.PerTryTimeout
 	}
@@ -2703,7 +2703,7 @@ func (x *HTTPRetry) GetRetryOn() string {
 	return ""
 }
 
-func (x *HTTPRetry) GetRetryRemoteLocalities() *wrappers.BoolValue {
+func (x *HTTPRetry) GetRetryRemoteLocalities() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.RetryRemoteLocalities
 	}
@@ -2773,11 +2773,11 @@ type CorsPolicy struct {
 	ExposeHeaders []string `protobuf:"bytes,4,rep,name=expose_headers,json=exposeHeaders,proto3" json:"expose_headers,omitempty"`
 	// Specifies how long the results of a preflight request can be
 	// cached. Translates to the `Access-Control-Max-Age` header.
-	MaxAge *duration.Duration `protobuf:"bytes,5,opt,name=max_age,json=maxAge,proto3" json:"max_age,omitempty"`
+	MaxAge *durationpb.Duration `protobuf:"bytes,5,opt,name=max_age,json=maxAge,proto3" json:"max_age,omitempty"`
 	// Indicates whether the caller is allowed to send the actual request
 	// (not the preflight) using credentials. Translates to
 	// `Access-Control-Allow-Credentials` header.
-	AllowCredentials *wrappers.BoolValue `protobuf:"bytes,6,opt,name=allow_credentials,json=allowCredentials,proto3" json:"allow_credentials,omitempty"`
+	AllowCredentials *wrapperspb.BoolValue `protobuf:"bytes,6,opt,name=allow_credentials,json=allowCredentials,proto3" json:"allow_credentials,omitempty"`
 }
 
 func (x *CorsPolicy) Reset() {
@@ -2848,14 +2848,14 @@ func (x *CorsPolicy) GetExposeHeaders() []string {
 	return nil
 }
 
-func (x *CorsPolicy) GetMaxAge() *duration.Duration {
+func (x *CorsPolicy) GetMaxAge() *durationpb.Duration {
 	if x != nil {
 		return x.MaxAge
 	}
 	return nil
 }
 
-func (x *CorsPolicy) GetAllowCredentials() *wrappers.BoolValue {
+func (x *CorsPolicy) GetAllowCredentials() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.AllowCredentials
 	}
@@ -3263,14 +3263,14 @@ func (m *HTTPFaultInjection_Delay) GetHttpDelayType() isHTTPFaultInjection_Delay
 	return nil
 }
 
-func (x *HTTPFaultInjection_Delay) GetFixedDelay() *duration.Duration {
+func (x *HTTPFaultInjection_Delay) GetFixedDelay() *durationpb.Duration {
 	if x, ok := x.GetHttpDelayType().(*HTTPFaultInjection_Delay_FixedDelay); ok {
 		return x.FixedDelay
 	}
 	return nil
 }
 
-func (x *HTTPFaultInjection_Delay) GetExponentialDelay() *duration.Duration {
+func (x *HTTPFaultInjection_Delay) GetExponentialDelay() *durationpb.Duration {
 	if x, ok := x.GetHttpDelayType().(*HTTPFaultInjection_Delay_ExponentialDelay); ok {
 		return x.ExponentialDelay
 	}
@@ -3291,12 +3291,12 @@ type isHTTPFaultInjection_Delay_HttpDelayType interface {
 type HTTPFaultInjection_Delay_FixedDelay struct {
 	// Add a fixed delay before forwarding the request. Format:
 	// 1h/1m/1s/1ms. MUST be >=1ms.
-	FixedDelay *duration.Duration `protobuf:"bytes,2,opt,name=fixed_delay,json=fixedDelay,proto3,oneof"`
+	FixedDelay *durationpb.Duration `protobuf:"bytes,2,opt,name=fixed_delay,json=fixedDelay,proto3,oneof"`
 }
 
 type HTTPFaultInjection_Delay_ExponentialDelay struct {
 	// $hide_from_docs
-	ExponentialDelay *duration.Duration `protobuf:"bytes,3,opt,name=exponential_delay,json=exponentialDelay,proto3,oneof"`
+	ExponentialDelay *durationpb.Duration `protobuf:"bytes,3,opt,name=exponential_delay,json=exponentialDelay,proto3,oneof"`
 }
 
 func (*HTTPFaultInjection_Delay_FixedDelay) isHTTPFaultInjection_Delay_HttpDelayType() {}
@@ -3961,9 +3961,9 @@ var file_networking_v1beta1_virtual_service_proto_goTypes = []interface{}{
 	nil,                                     // 33: istio.networking.v1beta1.TLSMatchAttributes.SourceLabelsEntry
 	(*HTTPFaultInjection_Delay)(nil),        // 34: istio.networking.v1beta1.HTTPFaultInjection.Delay
 	(*HTTPFaultInjection_Abort)(nil),        // 35: istio.networking.v1beta1.HTTPFaultInjection.Abort
-	(*duration.Duration)(nil),               // 36: google.protobuf.Duration
-	(*wrappers.UInt32Value)(nil),            // 37: google.protobuf.UInt32Value
-	(*wrappers.BoolValue)(nil),              // 38: google.protobuf.BoolValue
+	(*durationpb.Duration)(nil),             // 36: google.protobuf.Duration
+	(*wrapperspb.UInt32Value)(nil),          // 37: google.protobuf.UInt32Value
+	(*wrapperspb.BoolValue)(nil),            // 38: google.protobuf.BoolValue
 }
 var file_networking_v1beta1_virtual_service_proto_depIdxs = []int32{
 	3,  // 0: istio.networking.v1beta1.VirtualService.http:type_name -> istio.networking.v1beta1.HTTPRoute

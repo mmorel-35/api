@@ -25,9 +25,9 @@
 package v1alpha1
 
 import (
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	v1alpha1 "istio.io/api/analysis/v1alpha1"
 	reflect "reflect"
 	sync "sync"
@@ -128,10 +128,10 @@ type IstioCondition struct {
 	Status string `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
 	// Last time we probed the condition.
 	// +optional
-	LastProbeTime *timestamp.Timestamp `protobuf:"bytes,3,opt,name=last_probe_time,json=lastProbeTime,proto3" json:"last_probe_time,omitempty"`
+	LastProbeTime *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=last_probe_time,json=lastProbeTime,proto3" json:"last_probe_time,omitempty"`
 	// Last time the condition transitioned from one status to another.
 	// +optional
-	LastTransitionTime *timestamp.Timestamp `protobuf:"bytes,4,opt,name=last_transition_time,json=lastTransitionTime,proto3" json:"last_transition_time,omitempty"`
+	LastTransitionTime *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_transition_time,json=lastTransitionTime,proto3" json:"last_transition_time,omitempty"`
 	// Unique, one-word, CamelCase reason for the condition's last transition.
 	// +optional
 	Reason string `protobuf:"bytes,5,opt,name=reason,proto3" json:"reason,omitempty"`
@@ -186,14 +186,14 @@ func (x *IstioCondition) GetStatus() string {
 	return ""
 }
 
-func (x *IstioCondition) GetLastProbeTime() *timestamp.Timestamp {
+func (x *IstioCondition) GetLastProbeTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.LastProbeTime
 	}
 	return nil
 }
 
-func (x *IstioCondition) GetLastTransitionTime() *timestamp.Timestamp {
+func (x *IstioCondition) GetLastTransitionTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.LastTransitionTime
 	}
@@ -277,7 +277,7 @@ var file_meta_v1alpha1_status_proto_goTypes = []interface{}{
 	(*IstioStatus)(nil),                  // 0: istio.meta.v1alpha1.IstioStatus
 	(*IstioCondition)(nil),               // 1: istio.meta.v1alpha1.IstioCondition
 	(*v1alpha1.AnalysisMessageBase)(nil), // 2: istio.analysis.v1alpha1.AnalysisMessageBase
-	(*timestamp.Timestamp)(nil),          // 3: google.protobuf.Timestamp
+	(*timestamppb.Timestamp)(nil),        // 3: google.protobuf.Timestamp
 }
 var file_meta_v1alpha1_status_proto_depIdxs = []int32{
 	1, // 0: istio.meta.v1alpha1.IstioStatus.conditions:type_name -> istio.meta.v1alpha1.IstioCondition

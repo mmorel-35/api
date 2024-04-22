@@ -27,10 +27,10 @@
 package v1beta1
 
 import (
-	duration "github.com/golang/protobuf/ptypes/duration"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -186,7 +186,7 @@ type JWTRule struct {
 	OutputClaimToHeaders []*ClaimToHeader `protobuf:"bytes,11,rep,name=output_claim_to_headers,json=outputClaimToHeaders,proto3" json:"output_claim_to_headers,omitempty"` // [TODO:Update the status whenever this feature is promoted.]
 	// The maximum amount of time that the resolver, determined by the PILOT_JWT_ENABLE_REMOTE_JWKS environment variable,
 	// will spend waiting for the JWKS to be fetched. Default is 5s.
-	Timeout *duration.Duration `protobuf:"bytes,13,opt,name=timeout,proto3" json:"timeout,omitempty"`
+	Timeout *durationpb.Duration `protobuf:"bytes,13,opt,name=timeout,proto3" json:"timeout,omitempty"`
 }
 
 func (x *JWTRule) Reset() {
@@ -291,7 +291,7 @@ func (x *JWTRule) GetOutputClaimToHeaders() []*ClaimToHeader {
 	return nil
 }
 
-func (x *JWTRule) GetTimeout() *duration.Duration {
+func (x *JWTRule) GetTimeout() *durationpb.Duration {
 	if x != nil {
 		return x.Timeout
 	}
@@ -486,10 +486,10 @@ func file_security_v1beta1_jwt_proto_rawDescGZIP() []byte {
 
 var file_security_v1beta1_jwt_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_security_v1beta1_jwt_proto_goTypes = []interface{}{
-	(*JWTRule)(nil),           // 0: istio.security.v1beta1.JWTRule
-	(*JWTHeader)(nil),         // 1: istio.security.v1beta1.JWTHeader
-	(*ClaimToHeader)(nil),     // 2: istio.security.v1beta1.ClaimToHeader
-	(*duration.Duration)(nil), // 3: google.protobuf.Duration
+	(*JWTRule)(nil),             // 0: istio.security.v1beta1.JWTRule
+	(*JWTHeader)(nil),           // 1: istio.security.v1beta1.JWTHeader
+	(*ClaimToHeader)(nil),       // 2: istio.security.v1beta1.ClaimToHeader
+	(*durationpb.Duration)(nil), // 3: google.protobuf.Duration
 }
 var file_security_v1beta1_jwt_proto_depIdxs = []int32{
 	1, // 0: istio.security.v1beta1.JWTRule.from_headers:type_name -> istio.security.v1beta1.JWTHeader

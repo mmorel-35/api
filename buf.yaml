@@ -1,10 +1,14 @@
 version: v1
+name: buf.build/istio/api
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/k8s/api
 build:
   excludes:
     - common-protos
 breaking:
   use:
-  - WIRE_JSON
+    - WIRE_JSON
 lint:
   use:
     - BASIC

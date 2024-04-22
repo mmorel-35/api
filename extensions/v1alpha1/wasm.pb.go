@@ -208,11 +208,11 @@
 package v1alpha1
 
 import (
-	_struct "github.com/golang/protobuf/ptypes/struct"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	v1beta1 "istio.io/api/type/v1beta1"
 	reflect "reflect"
 	sync "sync"
@@ -623,7 +623,7 @@ type WasmPlugin struct {
 	// For the future use, just keep this field in proto and hide from documentation.
 	VerificationKey string `protobuf:"bytes,6,opt,name=verification_key,json=verificationKey,proto3" json:"verification_key,omitempty"`
 	// The configuration that will be passed on to the plugin.
-	PluginConfig *_struct.Struct `protobuf:"bytes,7,opt,name=plugin_config,json=pluginConfig,proto3" json:"plugin_config,omitempty"`
+	PluginConfig *structpb.Struct `protobuf:"bytes,7,opt,name=plugin_config,json=pluginConfig,proto3" json:"plugin_config,omitempty"`
 	// The plugin name to be used in the Envoy configuration (used to be called
 	// `rootID`). Some .wasm modules might require this value to select the Wasm
 	// plugin to execute.
@@ -638,7 +638,7 @@ type WasmPlugin struct {
 	// If `priority` is not set, or two `WasmPlugins` exist with the same
 	// value, the ordering will be deterministically derived from name and
 	// namespace of the `WasmPlugins`. Defaults to `0`.
-	Priority *wrappers.Int32Value `protobuf:"bytes,10,opt,name=priority,proto3" json:"priority,omitempty"`
+	Priority *wrapperspb.Int32Value `protobuf:"bytes,10,opt,name=priority,proto3" json:"priority,omitempty"`
 	// Specifies the failure behavior for the plugin due to fatal errors.
 	FailStrategy FailStrategy `protobuf:"varint,13,opt,name=fail_strategy,json=failStrategy,proto3,enum=istio.extensions.v1alpha1.FailStrategy" json:"fail_strategy,omitempty"`
 	// Configuration for a Wasm VM.
@@ -740,7 +740,7 @@ func (x *WasmPlugin) GetVerificationKey() string {
 	return ""
 }
 
-func (x *WasmPlugin) GetPluginConfig() *_struct.Struct {
+func (x *WasmPlugin) GetPluginConfig() *structpb.Struct {
 	if x != nil {
 		return x.PluginConfig
 	}
@@ -761,7 +761,7 @@ func (x *WasmPlugin) GetPhase() PluginPhase {
 	return PluginPhase_UNSPECIFIED_PHASE
 }
 
-func (x *WasmPlugin) GetPriority() *wrappers.Int32Value {
+func (x *WasmPlugin) GetPriority() *wrapperspb.Int32Value {
 	if x != nil {
 		return x.Priority
 	}
@@ -1139,8 +1139,8 @@ var file_extensions_v1alpha1_wasm_proto_goTypes = []interface{}{
 	(*WasmPlugin_TrafficSelector)(nil),    // 8: istio.extensions.v1alpha1.WasmPlugin.TrafficSelector
 	(*v1beta1.WorkloadSelector)(nil),      // 9: istio.type.v1beta1.WorkloadSelector
 	(*v1beta1.PolicyTargetReference)(nil), // 10: istio.type.v1beta1.PolicyTargetReference
-	(*_struct.Struct)(nil),                // 11: google.protobuf.Struct
-	(*wrappers.Int32Value)(nil),           // 12: google.protobuf.Int32Value
+	(*structpb.Struct)(nil),               // 11: google.protobuf.Struct
+	(*wrapperspb.Int32Value)(nil),         // 12: google.protobuf.Int32Value
 	(v1beta1.WorkloadMode)(0),             // 13: istio.type.v1beta1.WorkloadMode
 	(*v1beta1.PortSelector)(nil),          // 14: istio.type.v1beta1.PortSelector
 }

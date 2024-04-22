@@ -89,9 +89,9 @@
 package v1beta1
 
 import (
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	v1beta1 "istio.io/api/type/v1beta1"
 	reflect "reflect"
 	sync "sync"
@@ -135,7 +135,7 @@ type ProxyConfig struct {
 	// The number of worker threads to run.
 	// If unset, this will be automatically determined based on CPU requests/limits.
 	// If set to 0, all cores on the machine will be used.
-	Concurrency *wrappers.Int32Value `protobuf:"bytes,2,opt,name=concurrency,proto3" json:"concurrency,omitempty"`
+	Concurrency *wrapperspb.Int32Value `protobuf:"bytes,2,opt,name=concurrency,proto3" json:"concurrency,omitempty"`
 	// Additional environment variables for the proxy.
 	// Names starting with `ISTIO_META_` will be included in the generated bootstrap configuration and sent to the XDS server.
 	EnvironmentVariables map[string]string `protobuf:"bytes,3,rep,name=environment_variables,json=environmentVariables,proto3" json:"environment_variables,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
@@ -182,7 +182,7 @@ func (x *ProxyConfig) GetSelector() *v1beta1.WorkloadSelector {
 	return nil
 }
 
-func (x *ProxyConfig) GetConcurrency() *wrappers.Int32Value {
+func (x *ProxyConfig) GetConcurrency() *wrapperspb.Int32Value {
 	if x != nil {
 		return x.Concurrency
 	}
@@ -320,7 +320,7 @@ var file_networking_v1beta1_proxy_config_proto_goTypes = []interface{}{
 	(*ProxyImage)(nil),               // 1: istio.networking.v1beta1.ProxyImage
 	nil,                              // 2: istio.networking.v1beta1.ProxyConfig.EnvironmentVariablesEntry
 	(*v1beta1.WorkloadSelector)(nil), // 3: istio.type.v1beta1.WorkloadSelector
-	(*wrappers.Int32Value)(nil),      // 4: google.protobuf.Int32Value
+	(*wrapperspb.Int32Value)(nil),    // 4: google.protobuf.Int32Value
 }
 var file_networking_v1beta1_proxy_config_proto_depIdxs = []int32{
 	3, // 0: istio.networking.v1beta1.ProxyConfig.selector:type_name -> istio.type.v1beta1.WorkloadSelector
