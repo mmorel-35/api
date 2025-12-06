@@ -34,7 +34,7 @@ message FieldRules {
         StringRules string = 3;
         BoolRules bool = 4;
         Int32Rules int32 = 5;
-        Int64Rules int64 = 6;  
+        Int64Rules int64 = 6;
     }
 }
 
