@@ -12,4 +12,3 @@ lint:
   except:
     - FIELD_LOWER_SNAKE_CASE
     - PACKAGE_DIRECTORY_MATCH
-  allow_comment_ignores: true
