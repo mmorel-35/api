@@ -1,8 +1,8 @@
 version: v2
 modules:
   - path: .
-    excludes:
-      - common-protos
+deps:
+  - buf.build/googleapis/googleapis
 breaking:
   use:
     - WIRE_JSON
