@@ -21,7 +21,7 @@ shopt -s globstar
 # for istioctl, which would prevent adding new fields (since they would fail the validation command).
 
 # Check if all examples are valid
-for proto in $(find . -name "*.proto" | grep -v ^./common-protos | grep -v ^./envoy); do
+for proto in $(find . -name "*.proto" | grep -v ^./envoy); do
     echo "Checking ${proto}..."
     # For each proto, we will remove comments (`//` or `// ` at start of line),
     # then find texts between ```yaml and ```. We separate each by ---, strip any ... (some docs elide resources),
